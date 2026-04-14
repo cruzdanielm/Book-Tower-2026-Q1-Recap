@@ -1,0 +1,2149 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Book Tower Internal Review · Section 1 — Guest Satisfaction &amp; Reputation</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Lato:wght@300;400;700;900&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --slate:#4A6572;
+    --slate-dark:#3A525C;
+    --slate-deeper:#2F434C;
+    --coral:#D65C3C;
+    --coral-deep:#BA4B2E;
+    --ink:#2E2E2E;
+    --ink-soft:#545B62;
+    --muted:#9AA2A8;
+    --line:#E3E6E8;
+    --softgray:#F6F7F8;
+    --white:#FFFFFF;
+    --good:#5A8F6B;
+    --bad:#B4533C;
+  }
+  *{box-sizing:border-box}
+  html{scroll-behavior:smooth;}
+  html,body{margin:0;padding:0;background:#F0F1F3;color:var(--ink);
+    font-family:"Lato","Helvetica Neue",Helvetica,Arial,sans-serif;font-weight:400;line-height:1.5;
+    -webkit-font-smoothing:antialiased;}
+  /* offset anchor targets so the sticky nav doesn't cover section headers */
+  .hero, .sectionband{scroll-margin-top:64px;}
+
+  /* ===== Top navigation ===== */
+  .topnav{position:sticky;top:0;z-index:50;background:var(--slate);color:#fff;
+    border-bottom:2px solid var(--coral);box-shadow:0 1px 3px rgba(47,67,76,.12);}
+  .topnav-inner{max-width:1180px;margin:0 auto;padding:10px 24px;display:flex;
+    align-items:center;gap:18px;flex-wrap:wrap;}
+  .topnav .brand{font-size:12px;font-weight:700;letter-spacing:.14em;text-transform:uppercase;color:var(--coral);flex-shrink:0;}
+  .topnav ul{list-style:none;margin:0;padding:0;display:flex;flex-wrap:wrap;gap:2px;flex:1;}
+  .topnav li{display:inline-block;}
+  .topnav a{display:inline-block;color:rgba(255,255,255,.88);text-decoration:none;
+    padding:6px 10px;font-size:12px;letter-spacing:.02em;border-radius:3px;
+    transition:background .15s ease,color .15s ease;}
+  .topnav a:hover{background:rgba(255,255,255,.10);color:#fff;}
+  .topnav a.top-link{color:var(--coral);font-weight:700;letter-spacing:.08em;text-transform:uppercase;font-size:11px;}
+  .topnav a.top-link:hover{background:rgba(249,168,37,.18);color:var(--coral);}
+  @media(max-width:820px){
+    .topnav-inner{padding:8px 16px;gap:8px;}
+    .topnav a{padding:5px 8px;font-size:11px;}
+  }
+
+  /* ===== Floating Back to Top button ===== */
+  .backtotop-float{position:fixed;right:20px;bottom:20px;z-index:60;
+    display:inline-flex;align-items:center;justify-content:center;
+    width:44px;height:44px;border-radius:50%;background:var(--slate);color:#fff;
+    text-decoration:none;box-shadow:0 4px 12px rgba(47,67,76,.25);
+    font-size:16px;font-weight:700;transition:background .15s,transform .15s;}
+  .backtotop-float:hover{background:var(--coral);transform:translateY(-2px);}
+  .backtotop-float::before{content:"↑";}
+
+  /* ===== Table of Contents ===== */
+  .toc{padding:40px 56px 8px;background:var(--white);border-bottom:1px solid var(--line);}
+  .toc .kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:4px;}
+  .toc h2{font-size:22px;font-weight:300;color:var(--slate-deeper);margin:0 0 6px;letter-spacing:-.005em;}
+  .toc .sub{color:var(--muted);font-size:13px;margin-bottom:22px;}
+  .toc-grid{display:grid;grid-template-columns:1fr 1fr;gap:10px 24px;padding-bottom:20px;}
+  .toc-item{display:flex;align-items:flex-start;gap:14px;padding:10px 12px;border:1px solid var(--line);border-radius:4px;text-decoration:none;color:var(--ink);transition:border-color .15s,background .15s,transform .15s;}
+  .toc-item:hover{border-color:var(--coral);background:#FDF6F3;transform:translateX(2px);}
+  .toc-item .num{font-size:18px;font-weight:300;color:var(--coral);min-width:30px;line-height:1;padding-top:2px;}
+  .toc-item .body{flex:1;}
+  .toc-item .name{font-size:14px;font-weight:700;color:var(--slate-deeper);line-height:1.25;}
+  .toc-item .desc{font-size:11px;color:var(--muted);margin-top:3px;line-height:1.4;}
+
+  /* ===== Back to Contents link (used between sections) ===== */
+  .backtocontents-wrap{text-align:center;padding:18px 56px 8px;background:var(--white);}
+  .backtocontents{display:inline-flex;align-items:center;gap:6px;font-size:11px;
+    color:var(--slate);text-decoration:none;letter-spacing:.08em;text-transform:uppercase;
+    font-weight:700;padding:6px 14px;border:1px solid var(--line);border-radius:3px;
+    transition:background .15s,color .15s,border-color .15s;}
+  .backtocontents:hover{background:var(--slate);color:#fff;border-color:var(--slate);}
+  .backtocontents::before{content:"↑";margin-right:2px;}
+
+  /* ===== PDF / Print styles ===== */
+  @media print{
+    @page{margin:0.5in;}
+    html,body{background:#fff;scroll-behavior:auto;}
+    .topnav,.backtotop-float,.print-help{display:none !important;}
+    .report{box-shadow:none;max-width:100%;margin:0;}
+    /* force color printing for coral/slate so the deck looks right */
+    *{-webkit-print-color-adjust:exact !important;print-color-adjust:exact !important;color-adjust:exact !important;}
+    /* remove scroll-margin-top so anchor targets print at the very top of their container */
+    .hero,.sectionband,.toc,section.part,[id^="section-"],#contents,#top{scroll-margin-top:0 !important;}
+    /* keep visual groups together but don't force blanks */
+    .hero,.sectionband,.toc{page-break-inside:avoid;break-inside:avoid;}
+    .kpi-row,.platforms,.outlets,.take,.bench,.losgrid,.toc-grid,.toc-item{break-inside:avoid;page-break-inside:avoid;}
+    section.part{break-inside:auto;}
+    /* PRESERVE CLICKABLE LINKS:
+       - do not set display:none on any <a>
+       - style them so they remain visible and PDF viewers recognize them */
+    a{color:var(--coral) !important;text-decoration:none !important;}
+    .toc-item{color:inherit !important;}
+    .toc-item:hover{background:transparent;transform:none;border-color:var(--line);}
+    /* Back-to-Contents links stay visible and functional in the PDF */
+    .backtocontents-wrap{padding:10px 56px 0;}
+    .backtocontents{display:inline-block;color:var(--slate) !important;border:1px solid var(--line);}
+  }
+  a{color:var(--coral);}
+  .report{max-width:1180px;margin:0 auto;background:var(--white);box-shadow:0 1px 2px rgba(47,67,76,.04),0 8px 32px rgba(47,67,76,.08);}
+
+  /* ===== Hero ===== */
+  .hero{background:var(--slate);color:#fff;padding:48px 56px 42px;position:relative;}
+  .hero .eyebrow{font-size:12px;letter-spacing:.2em;text-transform:uppercase;color:rgba(255,255,255,.72);font-weight:700;}
+  .hero h1{font-size:40px;font-weight:300;margin:10px 0 4px;letter-spacing:-.01em;line-height:1.1;}
+  .hero .sub{color:rgba(255,255,255,.8);font-size:15px;}
+  .hero .rule{width:54px;height:2px;background:var(--coral);margin:22px 0 16px;}
+  .hero .chips{display:flex;flex-wrap:wrap;gap:8px;margin-top:16px;}
+  .hero .chip{font-size:11px;letter-spacing:.08em;text-transform:uppercase;color:rgba(255,255,255,.9);
+    border:1px solid rgba(255,255,255,.4);border-radius:999px;padding:5px 12px;font-weight:700;}
+  .hero .meta{position:absolute;right:56px;top:48px;color:rgba(255,255,255,.7);font-size:12px;text-align:right;letter-spacing:.08em;text-transform:uppercase;}
+
+  /* ===== Section scaffolding ===== */
+  section.part{padding:44px 56px;border-bottom:1px solid var(--line);}
+  section.part:last-of-type{border-bottom:none;}
+  .kicker{font-size:11px;letter-spacing:.18em;text-transform:uppercase;color:var(--coral);font-weight:700;margin-bottom:6px;}
+  h2.ph{font-size:26px;font-weight:300;color:var(--slate-deeper);margin:0 0 6px;letter-spacing:-.005em;}
+  .plede{color:var(--ink-soft);font-size:14px;max-width:760px;margin-bottom:22px;}
+
+  /* ===== TL;DR callout ===== */
+  .tldr{background:var(--softgray);border-left:4px solid var(--coral);padding:16px 20px;border-radius:2px;margin:20px 0 0;}
+  .tldr .tag{font-size:11px;letter-spacing:.14em;color:var(--coral);font-weight:700;text-transform:uppercase;}
+  .tldr p{margin:4px 0 0;color:var(--ink);font-size:14px;line-height:1.55;}
+
+  /* ===== KPI row ===== */
+  .kpi-row{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin:4px 0 10px;}
+  .kpi{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:18px 18px 16px;text-align:left;}
+  .kpi .lbl{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+  .kpi .val{font-size:40px;font-weight:300;color:var(--coral);line-height:1;margin:10px 0 4px;}
+  .kpi .delta{font-size:12px;font-weight:700;color:var(--good);}
+  .kpi .delta.dn{color:var(--bad);}
+  .kpi .delta.neu{color:var(--muted);}
+  .kpi .sub{font-size:11px;color:var(--muted);margin-top:4px;}
+  .kpi .py-line{font-size:11px;color:var(--ink-soft);margin-top:6px;padding-top:6px;border-top:1px dashed var(--line);line-height:1.45;}
+  .kpi .py-line .py-val{color:var(--slate);font-weight:700;}
+  .kpi .py-line .py-delta{font-weight:700;margin-left:4px;}
+  .kpi .py-line .py-delta.pos{color:var(--good);}
+  .kpi .py-line .py-delta.neg{color:var(--bad);}
+  .kpi .py-line .py-delta.neu{color:var(--muted);}
+
+  /* ===== Platform scoreboard ===== */
+  .platforms{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;}
+  .platform{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:22px 22px 20px;text-align:center;}
+  .platform .name{font-size:14px;color:var(--slate);font-weight:700;letter-spacing:.02em;}
+  .platform .val{font-size:58px;font-weight:300;color:var(--coral);line-height:1;margin:10px 0 2px;}
+  .platform .stars{color:var(--coral);font-size:14px;letter-spacing:3px;}
+  .platform .scale{font-size:11px;color:var(--muted);margin-top:4px;}
+  .platform .rank{margin-top:12px;font-size:12px;color:var(--slate);font-weight:700;}
+  .platform .note{font-size:11px;color:var(--muted);margin-top:6px;line-height:1.45;}
+
+  /* ===== Two-column layout ===== */
+  .two{display:grid;grid-template-columns:2fr 1fr;gap:24px;}
+  .two.flip{grid-template-columns:1fr 2fr;}
+  .two.half{grid-template-columns:1fr 1fr;gap:20px;}
+
+  /* ===== Card ===== */
+  .card{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:20px 22px;}
+  .card h3{margin:0 0 4px;font-size:11px;color:var(--coral);font-weight:700;letter-spacing:.12em;text-transform:uppercase;}
+  .card h2{margin:0 0 14px;font-size:17px;color:var(--slate-deeper);font-weight:700;line-height:1.3;}
+  .card.dark{background:var(--slate);color:#fff;border-color:var(--slate);}
+  .card.dark h2{color:#fff;}
+  .card.dark h3{color:var(--coral);}
+  .card.dark p, .card.dark li{color:rgba(255,255,255,.92);}
+
+  .card ul{margin:0;padding:0;list-style:none;}
+  .card ul li{position:relative;padding:6px 0 6px 18px;font-size:13px;line-height:1.5;}
+  .card ul li::before{content:"";position:absolute;left:0;top:14px;width:6px;height:6px;border-radius:50%;background:var(--coral);}
+
+  /* ===== Data table ===== */
+  table.data{width:100%;border-collapse:collapse;font-size:13px;}
+  table.data thead th{color:var(--slate);border-bottom:1.5px solid var(--slate);font-weight:700;padding:9px 10px;text-align:right;font-size:11px;text-transform:uppercase;letter-spacing:.08em;}
+  table.data thead th:first-child{text-align:left;}
+  table.data tbody td{padding:9px 10px;border-bottom:1px solid var(--line);text-align:right;}
+  table.data tbody td:first-child{text-align:left;}
+  table.data tbody tr:last-child td{border-bottom:none;}
+  table.data .pos{color:var(--good);font-weight:700;}
+  table.data .neg{color:var(--bad);font-weight:700;}
+  table.data .neu{color:var(--muted);}
+  table.data tr.us td{background:#FBEEE9;color:var(--coral-deep);font-weight:700;}
+
+  /* ===== Horizontal bar chart ===== */
+  .hbars{display:grid;gap:10px;}
+  .hbar{display:grid;grid-template-columns:180px 1fr 50px;align-items:center;gap:12px;font-size:13px;}
+  .hbar .hname{color:var(--ink);}
+  .hbar .htrack{background:var(--softgray);height:18px;border-radius:2px;border:1px solid var(--line);}
+  .hbar .hfill{height:100%;background:var(--slate);border-radius:1px;}
+  .hbar.us .hfill{background:var(--coral);}
+  .hbar.us .hname{color:var(--coral-deep);font-weight:700;}
+  .hbar .hval{font-weight:700;text-align:right;}
+
+  /* ===== Stacked bar (NPS) ===== */
+  .stacked{display:grid;gap:12px;}
+  .sbar{display:grid;grid-template-columns:86px 1fr;align-items:center;gap:14px;}
+  .sbar .slabel{font-size:10px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+  .sbar .strack{height:28px;display:flex;border-radius:3px;overflow:hidden;}
+  .sbar .seg{display:flex;align-items:center;justify-content:center;color:#fff;font-size:11px;font-weight:700;}
+  .seg.prom{background:var(--slate);}
+  .seg.pass{background:#B8C4CA;color:var(--ink);}
+  .seg.det{background:var(--coral);}
+  .legend{display:flex;gap:16px;margin-top:12px;font-size:11px;color:var(--muted);}
+  .legend span::before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:2px;vertical-align:baseline;}
+  .legend .l-prom::before{background:var(--slate);}
+  .legend .l-pass::before{background:#B8C4CA;}
+  .legend .l-det::before{background:var(--coral);}
+
+  /* ===== NPS hero ===== */
+  .nps-wrap{display:flex;flex-direction:column;align-items:center;justify-content:center;text-align:center;gap:10px;padding:12px 0;}
+  .nps-circle{width:160px;height:160px;border-radius:50%;background:var(--coral);color:#fff;display:flex;flex-direction:column;align-items:center;justify-content:center;}
+  .nps-circle .big{font-size:60px;font-weight:300;line-height:1;}
+  .nps-circle .cap{font-size:12px;font-weight:700;letter-spacing:.18em;margin-top:2px;}
+  .nps-delta{color:var(--good);font-weight:700;font-size:13px;margin-top:4px;}
+  .nps-note{font-size:11px;color:var(--muted);line-height:1.5;max-width:260px;}
+
+  /* ===== Category tiles ===== */
+  .cats{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;}
+  .cat{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:16px 18px;position:relative;}
+  .cat .rank{position:absolute;top:14px;right:14px;background:var(--muted);color:#fff;font-size:10px;font-weight:700;padding:3px 9px;border-radius:999px;letter-spacing:.06em;}
+  .cat.win .rank{background:var(--good);}
+  .cat.mid .rank{background:var(--slate);}
+  .cat .nm{font-size:10px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
+  .cat .sc{font-size:36px;font-weight:300;color:var(--coral);line-height:1;margin:8px 0 4px;}
+  .cat.empty .sc{color:var(--muted);}
+  .cat .cm{font-size:11px;color:var(--muted);}
+
+  /* ===== Goal list ===== */
+  .goals{display:grid;gap:4px;}
+  .goal{display:grid;grid-template-columns:1fr auto auto;gap:14px;align-items:center;padding:10px 0;border-bottom:1px solid var(--line);}
+  .goal:last-child{border-bottom:none;}
+  .goal .gn{font-size:13px;font-weight:700;color:var(--slate-deeper);}
+  .goal .gs{font-size:11px;color:var(--muted);}
+  .goal .gv{font-size:20px;font-weight:300;color:var(--coral);}
+  .goal .gp{font-size:13px;font-weight:700;}
+  .goal .gp.up{color:var(--good);} .goal .gp.dn{color:var(--bad);}
+
+  /* ===== LOS small-multiples (true-proportional horizontal bars) ===== */
+  .losgrid{display:grid;grid-template-columns:repeat(3,1fr);gap:20px;}
+  .loschart{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:26px 28px 22px;display:flex;flex-direction:column;}
+  .loschart .chead{margin-bottom:22px;}
+  .loschart .ckicker{font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:6px;}
+  .loschart h2.ctitle{margin:0 0 10px;font-size:18px;color:var(--slate-deeper);font-weight:700;line-height:1.3;letter-spacing:-.005em;}
+  .loschart .clegend{display:flex;gap:14px;font-size:11px;color:var(--muted);}
+  .loschart .clegend span{display:flex;align-items:center;}
+  .loschart .clegend span::before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:1px;}
+  .loschart .clegend .l26::before{background:var(--coral);}
+  .loschart .clegend .l25::before{background:var(--slate);}
+
+  /* plot area — bars sit on a clean axis with no decorative tracks.
+     Grid columns per row: [72px label] [1fr PLOT] [62px value].
+     The PLOT column is the chart's scale: 0% = left edge, 100% = right edge. */
+  .losplot{position:relative;padding-bottom:26px;}
+  .losplot .losrows{display:grid;gap:14px;}
+  .losplot .losrow{display:grid;grid-template-columns:72px 1fr 62px;gap:12px;align-items:center;}
+  .losplot .losax{font-size:13px;font-weight:700;color:var(--slate-deeper);text-align:right;letter-spacing:.02em;}
+  .losplot .losbars2{display:flex;flex-direction:column;gap:5px;grid-column:2;}
+  .losplot .losvals2{display:flex;flex-direction:column;gap:5px;grid-column:3;align-items:flex-start;}
+  .losplot .hb{height:16px;}
+  .losplot .hbfill{height:100%;border-radius:1px;min-width:2px;}
+  .losplot .hbfill.y26{background:var(--coral);}
+  .losplot .hbfill.y25{background:var(--slate);}
+  .losplot .hbval{font-size:12px;font-weight:700;color:var(--ink);line-height:16px;height:16px;white-space:nowrap;letter-spacing:.01em;}
+  /* axis baseline + gridlines span the PLOT column only */
+  .losplot .axisbase{position:absolute;left:calc(72px + 12px);right:calc(62px + 12px);bottom:22px;height:1px;background:var(--line);}
+  .losplot .gridline{position:absolute;top:0;bottom:22px;border-left:1px dashed var(--line);width:0;pointer-events:none;}
+  .losplot .axislabel{position:absolute;bottom:0;font-size:10px;color:var(--muted);letter-spacing:.04em;font-weight:700;white-space:nowrap;transform:translateX(-50%);}
+  .losplot .axislabel.left{transform:none;}
+  .losplot .axislabel.right{transform:translateX(-100%);}
+
+  @media(max-width:820px){
+    .losgrid{grid-template-columns:1fr;}
+    .losrow{grid-template-columns:66px 1fr;gap:12px;}
+    .loschart{padding:20px 20px 18px;}
+  }
+
+  /* ===== Section divider band ===== */
+  .sectionband{background:var(--slate);color:#fff;padding:32px 56px;display:flex;justify-content:space-between;align-items:center;}
+  .sectionband .lbl{font-size:11px;letter-spacing:.2em;text-transform:uppercase;color:var(--coral);font-weight:700;}
+  .sectionband h2{margin:6px 0 0;font-size:30px;font-weight:300;letter-spacing:-.005em;}
+  .sectionband .right{color:rgba(255,255,255,.7);font-size:11px;letter-spacing:.08em;text-transform:uppercase;text-align:right;}
+
+  /* ===== Monthly trend mini-chart ===== */
+  .mchart{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;align-items:end;height:180px;padding:10px 0 6px;}
+  .mcol{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;}
+  .mbar{width:100%;background:var(--slate);border-radius:2px 2px 0 0;}
+  .mcol .mlbl{font-size:10px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;font-weight:700;}
+  .mcol .mval{font-size:10px;color:var(--ink);font-weight:700;}
+  .mchart-legend{display:flex;gap:12px;margin-top:6px;font-size:11px;color:var(--muted);}
+
+  /* ===== Industry benchmark tiles ===== */
+  .bench{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .bmk{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:16px 18px;position:relative;}
+  .bmk .bname{font-size:11px;color:var(--muted);letter-spacing:.1em;text-transform:uppercase;font-weight:700;}
+  .bmk .bval{font-size:30px;font-weight:300;color:var(--coral);line-height:1;margin:8px 0 2px;}
+  .bmk .bbench{font-size:11px;color:var(--ink-soft);}
+  .bmk .bstatus{margin-top:8px;display:inline-block;font-size:10px;letter-spacing:.08em;text-transform:uppercase;font-weight:700;padding:3px 8px;border-radius:999px;}
+  .bmk .bstatus.good{background:#E7F1EA;color:var(--good);}
+  .bmk .bstatus.mid{background:#FDEFE8;color:var(--coral-deep);}
+  .bmk .bstatus.bad{background:#F9E4DE;color:var(--bad);}
+
+  /* ===== F&B outlet scorecard (2x2) ===== */
+  .outlets{display:grid;grid-template-columns:1fr 1fr;gap:16px;}
+  .outlet{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:18px 20px;position:relative;}
+  .outlet::before{content:"";position:absolute;left:0;top:0;bottom:0;width:4px;background:var(--coral);border-radius:4px 0 0 4px;}
+  .outlet.good::before{background:var(--good);}
+  .outlet.warn::before{background:#D4A017;}
+  .outlet.bad::before{background:var(--bad);}
+  .outlet-head{display:flex;justify-content:space-between;align-items:baseline;border-bottom:1px solid var(--line);padding-bottom:8px;margin-bottom:10px;}
+  .outlet-head .name{font-size:15px;font-weight:700;color:var(--slate-deeper);letter-spacing:.01em;}
+  .outlet-head .rev{font-size:20px;font-weight:300;color:var(--coral);line-height:1;}
+  .outlet-head .rev small{font-size:11px;color:var(--muted);font-weight:400;margin-left:4px;}
+  .outlet-grid{display:grid;grid-template-columns:1fr 1fr 1fr;gap:10px;}
+  .om{font-size:10px;color:var(--muted);letter-spacing:.08em;text-transform:uppercase;font-weight:700;}
+  .ov{font-size:15px;font-weight:700;color:var(--slate-deeper);margin-top:2px;}
+  .ov.pos{color:var(--good);} .ov.neg{color:var(--bad);} .ov.mid{color:#D4A017;}
+  .outlet .note{font-size:11px;color:var(--muted);margin-top:10px;font-style:italic;line-height:1.4;}
+
+  /* ===== Takeaways grid ===== */
+  .take{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
+  .take .t{background:var(--white);border:1px solid var(--line);border-radius:4px;padding:16px 18px;border-top:4px solid var(--coral);}
+  .take .t.g{border-top-color:var(--good);}
+  .take .t.w{border-top-color:var(--slate);}
+  .take .t.i{border-top-color:#B8C4CA;}
+  .take .t h4{margin:0 0 8px;font-size:11px;color:var(--coral);letter-spacing:.14em;text-transform:uppercase;font-weight:700;}
+  .take .t.g h4{color:var(--good);}
+  .take .t.w h4{color:var(--slate);}
+  .take .t.i h4{color:var(--slate-light,#5E7783);}
+  .take .t p{margin:0;font-size:13px;line-height:1.55;}
+
+  /* ===== Footer ===== */
+  footer{padding:20px 56px;background:var(--softgray);color:var(--muted);font-size:11px;display:flex;justify-content:space-between;}
+  footer span{letter-spacing:.06em;}
+
+  /* stack small */
+  @media(max-width:820px){
+    .kpi-row, .platforms, .cats, .take{grid-template-columns:1fr 1fr;}
+    .two, .two.flip, .two.half{grid-template-columns:1fr;}
+    .hero, section.part, footer{padding-left:24px;padding-right:24px;}
+    .hero .meta{position:static;text-align:left;margin-top:10px;}
+    .hbar{grid-template-columns:140px 1fr 46px;}
+  }
+</style>
+</head>
+<body>
+
+<nav class="topnav" aria-label="Section navigation">
+  <div class="topnav-inner">
+    <div class="brand">Book Tower Review</div>
+    <ul>
+      <li><a href="#top" class="top-link">Top</a></li>
+      <li><a href="#contents" class="top-link">Contents</a></li>
+      <li><a href="#section-1">1 · Guest Satisfaction</a></li>
+      <li><a href="#section-2">2 · Financials</a></li>
+      <li><a href="#section-3">3 · Top Accounts</a></li>
+      <li><a href="#section-4">4 · Length of Stay</a></li>
+      <li><a href="#section-5">5 · STR</a></li>
+      <li><a href="#section-6">6 · Le Supreme</a></li>
+      <li><a href="#section-7">7 · Hiroki-San</a></li>
+      <li><a href="#section-8">8 · F&amp;B March</a></li>
+      <li><a href="#section-9">9 · F&amp;B Q1</a></li>
+      <li><a href="#section-10">10 · F&amp;B Forecast</a></li>
+    </ul>
+  </div>
+</nav>
+
+<div class="report" id="top">
+
+  <!-- ===================== HERO ===================== -->
+  <div class="hero" id="section-1">
+    <div class="meta">Internal Review<br>Prepared April 2026</div>
+    <div class="eyebrow">Book Tower Project · Section 1</div>
+    <h1>ROOST Detroit — Guest Satisfaction &amp; Reputation</h1>
+    <div class="sub">How guests are rating ROOST Detroit, and how we stack up against the Detroit comp set.</div>
+    <div class="rule"></div>
+    <div class="chips">
+      <span class="chip">ROOST Detroit</span>
+      <span class="chip">Le Supreme</span>
+      <span class="chip">Hiroki-San</span>
+      <span class="chip">Anthology</span>
+    </div>
+  </div>
+
+  <!-- ===================== TABLE OF CONTENTS ===================== -->
+  <div class="toc" id="contents">
+    <div class="kicker">Contents</div>
+    <h2>Ten sections · click to jump</h2>
+    <div class="sub">All links remain clickable when exported to PDF. <span class="print-help" style="color:var(--muted);font-style:italic;font-size:12px;">For best results in PDF, use <strong>File → Print → Save as PDF</strong> in Chrome/Edge/Safari.</span></div>
+    <div class="toc-grid">
+      <a class="toc-item" href="#section-1"><div class="num">01</div><div class="body"><div class="name">ROOST Detroit · Guest Satisfaction &amp; Reputation</div><div class="desc">NPS, survey trend, public review scores</div></div></a>
+      <a class="toc-item" href="#section-2"><div class="num">02</div><div class="body"><div class="name">Financial Performance</div><div class="desc">March, Q1 YTD, and FY 2026 forecast for ROOST Detroit</div></div></a>
+      <a class="toc-item" href="#section-3"><div class="num">03</div><div class="body"><div class="name">Top Producing Accounts</div><div class="desc">Top 15 corporate accounts, YoY shifts</div></div></a>
+      <a class="toc-item" href="#section-4"><div class="num">04</div><div class="body"><div class="name">Length of Stay Performance</div><div class="desc">Daily vs Weekly vs Monthly mix shift</div></div></a>
+      <a class="toc-item" href="#section-5"><div class="num">05</div><div class="body"><div class="name">STR Performance</div><div class="desc">MPI, ARI, RGI vs the Detroit comp set</div></div></a>
+      <a class="toc-item" href="#section-6"><div class="num">06</div><div class="body"><div class="name">Le Supreme · Guest Sentiment</div><div class="desc">Dec '25 – Mar '26 survey trend</div></div></a>
+      <a class="toc-item" href="#section-7"><div class="num">07</div><div class="body"><div class="name">Hiroki-San · Guest Sentiment</div><div class="desc">Dec '25 – Mar '26 survey trend</div></div></a>
+      <a class="toc-item" href="#section-8"><div class="num">08</div><div class="body"><div class="name">Book Tower F&amp;B · March 2026</div><div class="desc">Consolidated + outlet scorecards</div></div></a>
+      <a class="toc-item" href="#section-9"><div class="num">09</div><div class="body"><div class="name">Book Tower F&amp;B · Q1 YTD</div><div class="desc">Consolidated + outlet scorecards</div></div></a>
+      <a class="toc-item" href="#section-10"><div class="num">10</div><div class="body"><div class="name">Book Tower F&amp;B · 2026 Forecast</div><div class="desc">Outlet-by-outlet + roll-up</div></div></a>
+    </div>
+  </div>
+
+  <!-- ===================== EXECUTIVE SNAPSHOT ===================== -->
+  <section class="part">
+    <div class="kicker">Executive Snapshot</div>
+    <h2 class="ph">Trending up across every headline metric.</h2>
+    <p class="plede">Year-to-date through April 14, guest-rated quality is improving and the share of detractors has nearly halved. The watch-item is survey and review <em>volume</em>, not sentiment.</p>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="lbl">Avg. Guest Rating · YTD</div>
+        <div class="val">4.73</div>
+        <div class="delta">+6% vs YTD 2025</div>
+        <div class="sub">out of 5.00</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Net Promoter Score · YTD</div>
+        <div class="val">74</div>
+        <div class="delta">+4% vs YTD 2025</div>
+        <div class="sub">Promoters 79% · Detractors 5%</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Tripadvisor Rating</div>
+        <div class="val">4.9</div>
+        <div class="delta">#3 of all Detroit hotels</div>
+        <div class="sub">out of 5.0</div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Google Rating</div>
+        <div class="val">4.8</div>
+        <div class="delta">Top-tier public score</div>
+        <div class="sub">out of 5.0</div>
+      </div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">What it means</div>
+      <p>Average guest rating is up +0.25 pts (4.48 → 4.73) and detractor share has dropped from 7% to 5%. Once a guest engages with a survey, they almost always complete it (98% vs 84% last year). The headline risk is volume — TripAdvisor submissions are down 48% YTD.</p>
+    </div>
+  </section>
+
+  <!-- ===================== EXTERNAL REPUTATION ===================== -->
+  <section class="part">
+    <div class="kicker">Public Reviews</div>
+    <h2 class="ph">Top-rated on every public surface.</h2>
+    <p class="plede">Our external scores — the ones guests see before booking — are above the internal survey average. Worth leaning on in marketing.</p>
+
+    <div class="platforms">
+      <div class="platform">
+        <div class="name">Tripadvisor</div>
+        <div class="val">4.9</div>
+        <div class="stars">★ ★ ★ ★ ★</div>
+        <div class="scale">Average rating out of 5</div>
+        <div class="rank">#3 of all Detroit hotels</div>
+        <div class="note">Top-tier ranking on the platform most weighted by leisure travelers.</div>
+      </div>
+      <div class="platform">
+        <div class="name">Google</div>
+        <div class="val">4.8</div>
+        <div class="stars">★ ★ ★ ★ ★</div>
+        <div class="scale">Average rating out of 5</div>
+        <div class="rank">Highest-visibility platform</div>
+        <div class="note">First score most guests see in local &amp; branded search.</div>
+      </div>
+      <div class="platform">
+        <div class="name">Internal Survey</div>
+        <div class="val">4.73</div>
+        <div class="stars">★ ★ ★ ★ ★</div>
+        <div class="scale">YTD · out of 5.00</div>
+        <div class="rank">+6% vs YTD 2025</div>
+        <div class="note">Private guest feedback — directly actionable by operations.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== YoY ===================== -->
+  <section class="part">
+    <div class="kicker">Year-over-Year</div>
+    <h2 class="ph">YTD 2026 vs YTD 2025 — survey performance.</h2>
+
+    <div class="two">
+      <div class="card">
+        <h3>Survey metrics</h3>
+        <h2>Full table</h2>
+        <table class="data">
+          <thead><tr><th>Metric</th><th>YTD 2026</th><th>YTD 2025</th><th>Change</th></tr></thead>
+          <tbody>
+            <tr><td>Emails sent</td><td>1,949</td><td>2,481</td><td class="neg">-21%</td></tr>
+            <tr><td>Surveys received (response rate)</td><td>202 (10%)</td><td>260 (10%)</td><td class="neg">-22%</td></tr>
+            <tr><td>Avg. rating (0–5)</td><td>4.73</td><td>4.48</td><td class="pos">+6%</td></tr>
+            <tr><td>Net Promoter Score</td><td>74</td><td>71</td><td class="pos">+4%</td></tr>
+            <tr><td>Promoters (9–10)</td><td>160 (79%)</td><td>203 (78%)</td><td class="pos">+1 pt</td></tr>
+            <tr><td>Passives (7–8)</td><td>31 (15%)</td><td>39 (15%)</td><td class="neu">flat</td></tr>
+            <tr><td>Detractors (0–6)</td><td>11 (5%)</td><td>18 (7%)</td><td class="pos">-2 pts</td></tr>
+            <tr><td>Surveys responded to</td><td>197 (98%)</td><td>219 (84%)</td><td class="pos">+14 pts</td></tr>
+            <tr><td>Published to review sites</td><td>11 (5%)</td><td>20 (8%)</td><td class="neg">-45%</td></tr>
+            <tr><td>TripAdvisor reviews submitted</td><td>12</td><td>23</td><td class="neg">-48%</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card dark">
+        <h3>The read</h3>
+        <h2>Quality is up. Volume is the watch-item.</h2>
+        <p style="font-size:13px;line-height:1.5;margin:0 0 10px;"><strong>Quality:</strong> Rating, NPS, and detractor share all improved — guests who do engage are more satisfied.</p>
+        <p style="font-size:13px;line-height:1.5;margin:0 0 10px;"><strong>Engagement:</strong> Once a guest starts a survey, they almost always complete it (98% vs 84%).</p>
+        <p style="font-size:13px;line-height:1.5;margin:0 0 10px;"><strong>Volume:</strong> Sends are down 21% and published reviews are down 45%. Fewer guests are entering the funnel.</p>
+        <p style="font-size:13px;line-height:1.5;margin:0;"><strong>Action:</strong> Investigate the drop in survey emails sent — is it stay volume, list hygiene, or timing?</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== NPS ===================== -->
+  <section class="part">
+    <div class="kicker">Net Promoter Score</div>
+    <h2 class="ph">Promoters, passives &amp; detractors.</h2>
+
+    <div class="two flip">
+      <div class="card">
+        <div class="nps-wrap">
+          <div style="font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-weight:700;">Net Promoter Score · YTD</div>
+          <div class="nps-circle">
+            <div class="big">74</div>
+            <div class="cap">NPS</div>
+          </div>
+          <div class="nps-delta">+3 pts vs. YTD 2025 (71)</div>
+          <div class="nps-note">Calculated as % Promoters − % Detractors.<br>Hospitality benchmark: 50 is strong; 70+ is elite.</div>
+        </div>
+      </div>
+
+      <div class="card">
+        <h3>Composition · 2026 vs 2025</h3>
+        <h2>Detractor share has nearly halved year-over-year.</h2>
+        <div class="stacked">
+          <div class="sbar">
+            <div class="slabel">YTD 2026</div>
+            <div class="strack">
+              <div class="seg prom" style="width:79%;">79%</div>
+              <div class="seg pass" style="width:15%;">15%</div>
+              <div class="seg det"  style="width:6%;">5%</div>
+            </div>
+          </div>
+          <div class="sbar">
+            <div class="slabel">YTD 2025</div>
+            <div class="strack">
+              <div class="seg prom" style="width:78%;">78%</div>
+              <div class="seg pass" style="width:15%;">15%</div>
+              <div class="seg det"  style="width:7%;">7%</div>
+            </div>
+          </div>
+        </div>
+        <div class="legend">
+          <span class="l-prom">Promoters (9–10)</span>
+          <span class="l-pass">Passives (7–8)</span>
+          <span class="l-det">Detractors (0–6)</span>
+        </div>
+
+        <div style="display:grid;grid-template-columns:repeat(3,1fr);gap:10px;margin-top:16px;">
+          <div style="border:1px solid var(--line);border-radius:3px;padding:10px 14px;">
+            <div style="font-size:22px;font-weight:300;color:var(--coral);">79%</div>
+            <div style="font-size:12px;font-weight:700;color:var(--slate);">Promoters</div>
+            <div style="font-size:10px;color:var(--good);margin-top:2px;">+1 pt YoY</div>
+          </div>
+          <div style="border:1px solid var(--line);border-radius:3px;padding:10px 14px;">
+            <div style="font-size:22px;font-weight:300;color:var(--coral);">15%</div>
+            <div style="font-size:12px;font-weight:700;color:var(--slate);">Passives</div>
+            <div style="font-size:10px;color:var(--muted);margin-top:2px;">flat</div>
+          </div>
+          <div style="border:1px solid var(--line);border-radius:3px;padding:10px 14px;">
+            <div style="font-size:22px;font-weight:300;color:var(--coral);">5%</div>
+            <div style="font-size:12px;font-weight:700;color:var(--slate);">Detractors</div>
+            <div style="font-size:10px;color:var(--good);margin-top:2px;">-2 pts YoY (7% → 5%)</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+
+  <!-- ===================== TAKEAWAYS ===================== -->
+  <section class="part">
+    <div class="kicker">Section 1 · Takeaways</div>
+    <h2 class="ph">Guest satisfaction is a strength — volume is the next unlock.</h2>
+
+    <div class="take">
+      <div class="t g">
+        <h4>Strengths</h4>
+        <p>Tripadvisor 4.9 (#3 in Detroit) and Google 4.8 — top-tier on every public platform. Internal rating 4.73 and NPS 74 both up YoY; detractor share down from 7% to 5%.</p>
+      </div>
+      <div class="t">
+        <h4>Watchout</h4>
+        <p>Review and survey volume is down materially YoY (TA submissions -48%, sends -21%) — we're winning on smaller denominators.</p>
+      </div>
+      <div class="t i">
+        <h4>Opportunity</h4>
+        <p>Public reputation is strong enough to lead with in marketing — lean on the Tripadvisor and Google scores in direct booking and paid channels.</p>
+      </div>
+      <div class="t w">
+        <h4>Next step</h4>
+        <p>Diagnose the drop in survey emails sent vs 2025 and re-engage the post-stay review ask across Tripadvisor &amp; Google.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 2 BAND ===================== -->
+  <div class="backtocontents-wrap"><a class="backtocontents" href="#contents">Back to Contents</a></div>
+
+  <div class="sectionband" id="section-2">
+    <div>
+      <div class="lbl">Section 2</div>
+      <h2>Financial Performance</h2>
+    </div>
+    <div class="right">USALI Accrual Summary<br>March 2026 · Q1 YTD · FY Forecast</div>
+  </div>
+
+  <!-- ===================== MARCH 2026 ===================== -->
+  <section class="part">
+    <div class="kicker">March 2026 · Executive Summary</div>
+    <h2 class="ph">Strong month — revenue, profit, and EBITDA all beat budget decisively.</h2>
+    <p class="plede">March delivered a breakout performance on the top and bottom line. Occupancy ran well ahead of plan and prior year; rate compressed but volume more than offset it. Expense discipline across rooms and undistributed pushed GOP and EBITDA to ~61% and ~89% ahead of budget respectively.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="lbl">Occupancy</div><div class="val">71.4%</div><div class="delta">+13.5 pts vs budget</div><div class="sub">+14.9 pts vs Mar 2025</div></div>
+      <div class="kpi"><div class="lbl">ADR</div><div class="val">$239</div><div class="delta dn">-7.4% vs budget</div><div class="sub">-4.4% vs Mar 2025</div></div>
+      <div class="kpi"><div class="lbl">RevPAR</div><div class="val">$170.59</div><div class="delta">+14.3% vs budget</div><div class="sub">+20.9% vs Mar 2025</div></div>
+      <div class="kpi"><div class="lbl">EBITDA</div><div class="val">$181.7K</div><div class="delta">+88.9% vs budget</div><div class="sub">+59.4% vs Mar 2025</div></div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">Read</div>
+      <p><strong>Volume story, not rate.</strong> 2,611 rooms sold (+495 vs budget / +546 vs LY) drove $649.6K in rooms revenue — $85K ahead of budget despite rate being $19 below plan. Departmental profit of $520.2K flows through at 80.1% margin; undistributed came in -3.0% under plan, led by Sales &amp; Marketing (-$9.4K) and Utilities (-$3.9K). Replacement reserve was not funded this period, which adds ~$21.7K to reported EBITDA vs plan.</p>
+    </div>
+
+    <div class="two" style="margin-top:22px;">
+      <div class="card">
+        <h3>March 2026 P&amp;L Summary</h3>
+        <h2>Actual vs Budget vs Last Year</h2>
+        <table class="data">
+          <thead><tr><th></th><th>Actual</th><th>Budget</th><th>Var %</th><th>LY (Mar '25)</th></tr></thead>
+          <tbody>
+            <tr><td>Rooms sold</td><td>2,611</td><td>2,116</td><td class="pos">+23.4%</td><td>2,065</td></tr>
+            <tr><td>Rooms revenue</td><td>$649,615</td><td>$564,568</td><td class="pos">+15.1%</td><td>$524,543</td></tr>
+            <tr><td>Total rooms expense</td><td>$129,377</td><td>$129,187</td><td class="neu">+0.1%</td><td>$113,915</td></tr>
+            <tr><td>Departmental profit</td><td>$520,238</td><td>$435,380</td><td class="pos">+19.5%</td><td>$410,628</td></tr>
+            <tr><td>Undistributed expenses</td><td>$274,916</td><td>$283,478</td><td class="pos">-3.0%</td><td>$243,916</td></tr>
+            <tr><td>Gross operating profit</td><td>$245,322</td><td>$151,902</td><td class="pos">+61.5%</td><td>$166,712</td></tr>
+            <tr><td>Non-operating</td><td>$40,108</td><td>$34,993</td><td class="neg">+14.6%</td><td>$33,632</td></tr>
+            <tr><td><strong>EBITDA</strong></td><td><strong>$181,733</strong></td><td><strong>$96,227</strong></td><td class="pos"><strong>+88.9%</strong></td><td><strong>$113,986</strong></td></tr>
+            <tr><td>EBITDA after RR &amp; PY</td><td>$181,733</td><td>$74,563</td><td class="pos">+143.7%</td><td>$113,986</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card dark">
+        <h3>Drivers</h3>
+        <h2>What moved the month</h2>
+        <p style="font-size:13px;line-height:1.55;margin:0 0 10px;"><strong>Demand.</strong> Occupancy at 71.4% is 13.5 pts above plan and nearly 15 pts above last year — the clearest signal of healthy demand ramp.</p>
+        <p style="font-size:13px;line-height:1.55;margin:0 0 10px;"><strong>Rate pressure.</strong> ADR of $239 vs $258 budget reflects the volume trade-off. Net mix still lifts RevPAR +14% vs plan.</p>
+        <p style="font-size:13px;line-height:1.55;margin:0 0 10px;"><strong>Rooms efficiency.</strong> Rooms expense held flat vs budget on ~23% more sold rooms — a ~$11.50 drop in CPOR (see KPIs below).</p>
+        <p style="font-size:13px;line-height:1.55;margin:0;"><strong>Controllables.</strong> S&amp;M came in 14.6% under plan; utilities 6.3% under. A&amp;G slightly over on timing.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== Q1 YTD ===================== -->
+  <section class="part">
+    <div class="kicker">2026 YTD Q1 · Executive Summary</div>
+    <h2 class="ph">Quarter closed ~$171K ahead of budget on EBITDA.</h2>
+    <p class="plede">Q1 followed the same pattern: outperformance on volume, underperformance on rate, and meaningful savings on undistributed operating expenses. EBITDA of $330.7K is more than double the $159.8K Q1 plan; net of replacement reserve, the quarter is 142% ahead of budgeted EBITDA.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="lbl">Occupancy · Q1</div><div class="val">60.8%</div><div class="delta">+7.8 pts vs budget</div><div class="sub">+8.8 pts vs Q1 2025</div></div>
+      <div class="kpi"><div class="lbl">ADR · Q1</div><div class="val">$239.62</div><div class="delta dn">-7.8% vs budget</div><div class="sub">-4.3% vs Q1 2025</div></div>
+      <div class="kpi"><div class="lbl">RevPAR · Q1</div><div class="val">$145.62</div><div class="delta">+5.7% vs budget</div><div class="sub">+12.0% vs Q1 2025</div></div>
+      <div class="kpi"><div class="lbl">EBITDA · Q1</div><div class="val">$330.7K</div><div class="delta">+107% vs budget</div><div class="sub">+29% vs Q1 2025</div></div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">Read</div>
+      <p><strong>Demand-led quarter with disciplined cost control.</strong> Rooms revenue finished $1.60M, $85K ahead of plan. More importantly, total rooms expense came in $15.7K <em>under</em> budget despite +14.6% more rooms sold — every line of undistributed spend ran under plan (A&amp;G -9.9%, IT -11.7%, S&amp;M -10.9%, POM -10.3%, Utilities -12.7%). Replacement reserve deferred (-$63.2K vs plan) boosts reported EBITDA further.</p>
+    </div>
+
+    <div class="two" style="margin-top:22px;">
+      <div class="card">
+        <h3>Q1 2026 YTD P&amp;L Summary</h3>
+        <h2>Actual vs Budget vs Last Year</h2>
+        <table class="data">
+          <thead><tr><th></th><th>Actual</th><th>Budget</th><th>Var %</th><th>Q1 LY</th></tr></thead>
+          <tbody>
+            <tr><td>Rooms sold</td><td>6,454</td><td>5,630</td><td class="pos">+14.6%</td><td>5,515</td></tr>
+            <tr><td>Rooms revenue</td><td>$1,600,202</td><td>$1,514,698</td><td class="pos">+5.6%</td><td>$1,422,015</td></tr>
+            <tr><td>Total rooms expense</td><td>$367,479</td><td>$383,153</td><td class="pos">-4.1%</td><td>$320,259</td></tr>
+            <tr><td>Departmental profit</td><td>$1,232,722</td><td>$1,131,545</td><td class="pos">+8.9%</td><td>$1,101,757</td></tr>
+            <tr><td>Undistributed expenses</td><td>$722,695</td><td>$811,304</td><td class="pos">-10.9%</td><td>$703,318</td></tr>
+            <tr><td>Gross operating profit</td><td>$510,028</td><td>$320,241</td><td class="pos">+59.3%</td><td>$398,438</td></tr>
+            <tr><td>Non-operating</td><td>$120,969</td><td>$104,979</td><td class="neg">+15.2%</td><td>$90,659</td></tr>
+            <tr><td><strong>EBITDA</strong></td><td><strong>$330,681</strong></td><td><strong>$159,772</strong></td><td class="pos"><strong>+107.0%</strong></td><td><strong>$255,772</strong></td></tr>
+            <tr><td>EBITDA after RR &amp; PY</td><td>$330,681</td><td>$96,571</td><td class="pos">+242.4%</td><td>$254,923</td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card dark">
+        <h3>Drivers</h3>
+        <h2>Three reasons Q1 beat plan</h2>
+        <p style="font-size:13px;line-height:1.55;margin:0 0 10px;"><strong>Stronger demand earlier than expected.</strong> 824 incremental rooms vs plan; occupancy ramp ahead of schedule into stabilization.</p>
+        <p style="font-size:13px;line-height:1.55;margin:0 0 10px;"><strong>Rooms cost per occupied room held down.</strong> Salaries &amp; wages came in -6.2% under budget on higher volume — meaningful labor leverage (see KPIs).</p>
+        <p style="font-size:13px;line-height:1.55;margin:0;"><strong>Every undistributed line under plan.</strong> $88.6K total savings vs budget across A&amp;G, IT, S&amp;M, POM, and Utilities. Watch for catch-up spend in later quarters.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== FULL YEAR FORECAST ===================== -->
+  <section class="part">
+    <div class="kicker">2026 Full-Year Forecast · Executive Summary</div>
+    <h2 class="ph">Forecast to outperform budget by ~$213K on EBITDA after RR.</h2>
+    <p class="plede">The 12-month view carries Q1's momentum forward: rooms revenue ends ~$64.8K ahead of the $8.62M budget, expenses track ~$104K favorable across rooms and undistributed, and replacement reserve comes in ~$63K lighter than budget. Net: EBITDA forecast of $3.16M (+5.0% vs budget) and EBITDA after RR of $2.95M (+7.8%).</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="lbl">Rooms Revenue · FY</div><div class="val">$8.69M</div><div class="delta">+0.8% vs budget</div><div class="sub">Budget: $8.62M</div></div>
+      <div class="kpi"><div class="lbl">Occupancy · FY</div><div class="val">69.0%</div><div class="delta">+1.0 pt vs budget</div><div class="sub">ADR $281 vs $283 plan</div></div>
+      <div class="kpi"><div class="lbl">GOP · FY</div><div class="val">$3.92M</div><div class="delta">+4.5% vs budget</div><div class="sub">45.1% of revenue</div></div>
+      <div class="kpi"><div class="lbl">EBITDA after RR · FY</div><div class="val">$2.95M</div><div class="delta">+7.8% vs budget</div><div class="sub">Budget: $2.73M</div></div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">Read</div>
+      <p><strong>Revenue plan roughly intact; earnings upside comes from expense efficiency.</strong> Top-line is tracking within ~1% of plan, which is consistent with a rate-for-volume mix. The real lift is $88.6K of undistributed savings plus $15.7K of rooms savings flowing to EBITDA, with lighter replacement reserve funding adding another $63.2K to reported results.</p>
+    </div>
+
+    <div class="card" style="margin-top:22px;">
+      <h3>Monthly forecast · Rooms Revenue ($K)</h3>
+      <h2>Seasonality: Q2–Q4 carry the year</h2>
+      <div class="mchart">
+        <div class="mcol"><div class="mbar" style="height:51.6%;"></div><div class="mval">466</div><div class="mlbl">Jan</div></div>
+        <div class="mcol"><div class="mbar" style="height:53.7%;"></div><div class="mval">485</div><div class="mlbl">Feb</div></div>
+        <div class="mcol"><div class="mbar" style="height:71.9%;background:var(--coral);"></div><div class="mval">650</div><div class="mlbl">Mar</div></div>
+        <div class="mcol"><div class="mbar" style="height:79.1%;"></div><div class="mval">715</div><div class="mlbl">Apr</div></div>
+        <div class="mcol"><div class="mbar" style="height:97.1%;"></div><div class="mval">877</div><div class="mlbl">May</div></div>
+        <div class="mcol"><div class="mbar" style="height:97.4%;"></div><div class="mval">880</div><div class="mlbl">Jun</div></div>
+        <div class="mcol"><div class="mbar" style="height:82.4%;"></div><div class="mval">744</div><div class="mlbl">Jul</div></div>
+        <div class="mcol"><div class="mbar" style="height:96.8%;"></div><div class="mval">875</div><div class="mlbl">Aug</div></div>
+        <div class="mcol"><div class="mbar" style="height:92.2%;"></div><div class="mval">833</div><div class="mlbl">Sep</div></div>
+        <div class="mcol"><div class="mbar" style="height:100%;"></div><div class="mval">904</div><div class="mlbl">Oct</div></div>
+        <div class="mcol"><div class="mbar" style="height:77.6%;"></div><div class="mval">701</div><div class="mlbl">Nov</div></div>
+        <div class="mcol"><div class="mbar" style="height:62.1%;"></div><div class="mval">561</div><div class="mlbl">Dec</div></div>
+      </div>
+      <div class="mchart-legend">
+        <span>Q1 actualized (Jan–Mar); Apr–Dec forecast. Peak months: May, Jun, Aug, Oct (&gt;$870K). Full-year total: $8.69M.</span>
+      </div>
+    </div>
+
+    <div class="two" style="margin-top:18px;">
+      <div class="card">
+        <h3>2026 Forecast P&amp;L Summary</h3>
+        <h2>Forecast vs 2025 Budget baseline</h2>
+        <table class="data">
+          <thead><tr><th></th><th>FY Forecast</th><th>Budget</th><th>Var $</th><th>Var %</th></tr></thead>
+          <tbody>
+            <tr><td>Rooms sold</td><td>29,926</td><td>29,451</td><td class="pos">+475</td><td class="pos">+1.6%</td></tr>
+            <tr><td>Occupancy</td><td>69.0%</td><td>68.0%</td><td class="pos">+1.0 pt</td><td class="pos">+1.5%</td></tr>
+            <tr><td>ADR</td><td>$281</td><td>$283</td><td class="neg">-$2</td><td class="neg">-0.7%</td></tr>
+            <tr><td>RevPAR</td><td>$193.89</td><td>$192.44</td><td class="pos">+$1.45</td><td class="pos">+0.8%</td></tr>
+            <tr><td>Rooms revenue</td><td>$8,688,915</td><td>$8,624,139</td><td class="pos">+$64,776</td><td class="pos">+0.8%</td></tr>
+            <tr><td>Total rooms expense</td><td>$1,580,118</td><td>$1,595,792</td><td class="pos">-$15,674</td><td class="pos">-1.0%</td></tr>
+            <tr><td>Departmental profit</td><td>$7,108,797</td><td>$7,028,347</td><td class="pos">+$80,450</td><td class="pos">+1.1%</td></tr>
+            <tr><td>Undistributed expenses</td><td>$3,192,691</td><td>$3,281,300</td><td class="pos">-$88,609</td><td class="pos">-2.7%</td></tr>
+            <tr><td>Gross operating profit</td><td>$3,916,106</td><td>$3,747,047</td><td class="pos">+$169,059</td><td class="pos">+4.5%</td></tr>
+            <tr><td><strong>EBITDA</strong></td><td><strong>$3,161,374</strong></td><td><strong>$3,011,193</strong></td><td class="pos"><strong>+$150,181</strong></td><td class="pos"><strong>+5.0%</strong></td></tr>
+            <tr><td>Replacement reserve</td><td>$215,258</td><td>$278,460</td><td class="pos">-$63,202</td><td class="pos">-22.7%</td></tr>
+            <tr><td><strong>EBITDA after RR</strong></td><td><strong>$2,946,116</strong></td><td><strong>$2,732,733</strong></td><td class="pos"><strong>+$213,383</strong></td><td class="pos"><strong>+7.8%</strong></td></tr>
+          </tbody>
+        </table>
+      </div>
+
+      <div class="card dark">
+        <h3>Forecast risks &amp; watch-items</h3>
+        <h2>Three things to monitor</h2>
+        <p style="font-size:13px;line-height:1.55;margin:0 0 10px;"><strong>Rate vs volume mix.</strong> We are outperforming on heads in beds but running $2 below budget on ADR. If demand softens late-year, there is limited rate cushion to protect RevPAR.</p>
+        <p style="font-size:13px;line-height:1.55;margin:0 0 10px;"><strong>Q1 savings sustainability.</strong> Several undistributed lines (IT, POM, S&amp;M) are running 10%+ under plan. Some is timing — watch for Q2/Q3 catch-up that would compress GOP vs current trajectory.</p>
+        <p style="font-size:13px;line-height:1.55;margin:0;"><strong>Replacement reserve deferral.</strong> $63K under-funding lifts reported EBITDA but pushes capex timing. Need alignment with Bedrock on expected reserve schedule.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== KPI vs INDUSTRY ===================== -->
+  <section class="part">
+    <div class="kicker">Operating KPIs · vs Industry Benchmarks</div>
+    <h2 class="ph">ROOST Detroit is operating ahead of upscale urban benchmarks on every core efficiency metric.</h2>
+    <p class="plede">Benchmarks reference upscale/lifestyle urban-hotel norms (STR/HotStats median ranges). All ROOST figures from the 2026 P&amp;L; CPOR and labor per occupied room calculated from actuals.</p>
+
+    <div class="bench">
+      <div class="bmk">
+        <div class="bname">CPOR · March 2026</div>
+        <div class="bval">$49.55</div>
+        <div class="bbench">Industry: $55–70 upscale urban<br>Budget: $61.05</div>
+        <span class="bstatus good">Best in class</span>
+      </div>
+      <div class="bmk">
+        <div class="bname">CPOR · Q1 YTD</div>
+        <div class="bval">$56.94</div>
+        <div class="bbench">Industry: $55–70 upscale urban<br>Budget: $68.05</div>
+        <span class="bstatus good">Below budget, at benchmark</span>
+      </div>
+      <div class="bmk">
+        <div class="bname">Rooms Margin · Q1</div>
+        <div class="bval">77.0%</div>
+        <div class="bbench">Industry: 70–75%<br>FY forecast: 81.8%</div>
+        <span class="bstatus good">Above benchmark</span>
+      </div>
+      <div class="bmk">
+        <div class="bname">GOP Margin · FY '26</div>
+        <div class="bval">45.1%</div>
+        <div class="bbench">Industry: 35–42%<br>vs Budget: 43.4%</div>
+        <span class="bstatus good">Above benchmark</span>
+      </div>
+    </div>
+
+    <div class="bench" style="margin-top:14px;">
+      <div class="bmk">
+        <div class="bname">Rooms Labor / Occ Room · Q1</div>
+        <div class="bval">$36.33</div>
+        <div class="bbench">Industry: $35–45<br>S&amp;W + payroll-related</div>
+        <span class="bstatus good">In target range</span>
+      </div>
+      <div class="bmk">
+        <div class="bname">Rooms Labor % of Revenue · Q1</div>
+        <div class="bval">14.7%</div>
+        <div class="bbench">Industry: 14–18%<br>Target control threshold</div>
+        <span class="bstatus good">Healthy</span>
+      </div>
+      <div class="bmk">
+        <div class="bname">S&amp;M % of Revenue · Q1</div>
+        <div class="bval">10.6%</div>
+        <div class="bbench">Industry: 6–9%<br>Ramp-phase elevated</div>
+        <span class="bstatus mid">Above benchmark</span>
+      </div>
+      <div class="bmk">
+        <div class="bname">EBITDA Margin · FY '26</div>
+        <div class="bval">36.4%</div>
+        <div class="bbench">Industry: 28–35%<br>vs Budget: 34.9%</div>
+        <span class="bstatus good">Above benchmark</span>
+      </div>
+    </div>
+
+    <div class="tldr" style="margin-top:22px;">
+      <div class="tag">Operating take</div>
+      <p>The hotel is running <strong>cost-efficient across rooms and labor</strong>, and converting revenue to GOP/EBITDA well above industry medians. The one metric that sits above benchmark is <strong>Sales &amp; Marketing at ~10.6% of revenue</strong> — appropriate for a property still stabilizing, but worth a post-Q2 review to plan the step-down as awareness builds and direct share grows.</p>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 2 TAKEAWAYS ===================== -->
+  <section class="part">
+    <div class="kicker">Section 2 · Takeaways</div>
+    <h2 class="ph">Earnings are ahead of plan. The question is how much of it sticks.</h2>
+
+    <div class="take">
+      <div class="t g">
+        <h4>Strengths</h4>
+        <p>March and Q1 EBITDA beat budget by ~$86K and ~$171K respectively. CPOR, rooms margin, and GOP margin all sit above industry benchmarks — cost discipline is real.</p>
+      </div>
+      <div class="t">
+        <h4>Watchout</h4>
+        <p>ADR is running ~$20 below budget in Q1 and $2 below for the full year. Growth is volume-driven; limited rate cushion if demand softens late-year.</p>
+      </div>
+      <div class="t i">
+        <h4>Opportunity</h4>
+        <p>Full-year forecast shows +$213K EBITDA-after-RR upside to budget. Protect it by (a) converting occupancy gains into rate, and (b) validating that Q1 undistributed savings aren't simply deferred spend.</p>
+      </div>
+      <div class="t w">
+        <h4>Next step</h4>
+        <p>Align with Bedrock on replacement reserve funding schedule (currently $63K under budget) and tee up a mid-year ADR review with revenue management.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 3 BAND ===================== -->
+  <div class="backtocontents-wrap"><a class="backtocontents" href="#contents">Back to Contents</a></div>
+
+  <div class="sectionband" id="section-3">
+    <div>
+      <div class="lbl">Section 3</div>
+      <h2>Top Producing Accounts</h2>
+    </div>
+    <div class="right">Market Segment Drilldown<br>Q1 2026 vs Q1 2025</div>
+  </div>
+
+  <!-- ===================== TOP 15 SUMMARY ===================== -->
+  <section class="part">
+    <div class="kicker">Top 15 Producing Accounts · Q1 2026</div>
+    <h2 class="ph">Corporate account revenue is up +70% year-over-year — led by the Rocket ecosystem.</h2>
+    <p class="plede">The top 15 named corporate accounts produced <strong>$614.9K</strong> in Q1 2026 room revenue, up from <strong>$362.6K</strong> in Q1 2025 — an increase of +$252K (+69.6%). Growth is concentrated in two places: (1) the Rocket / Bedrock ecosystem expanding both in core bookings and a new extended-stay pattern, and (2) a wave of new corporate relationships that didn't exist last year.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="lbl">Top 15 Revenue · Q1 2026</div><div class="val">$614.9K</div><div class="delta">+70% vs Q1 2025</div><div class="sub">2025 baseline: $362.6K</div></div>
+      <div class="kpi"><div class="lbl">Top 15 Room Nights · Q1 2026</div><div class="val">2,628</div><div class="delta">+82% vs Q1 2025</div><div class="sub">2025: ~1,440 nights</div></div>
+      <div class="kpi"><div class="lbl">New Accounts in Top 15</div><div class="val">6</div><div class="delta">of 15 (40%)</div><div class="sub">Zero Q1 2025 revenue</div></div>
+      <div class="kpi"><div class="lbl">Rocket Ecosystem Share</div><div class="val">~51%</div><div class="delta">of top 15 revenue</div><div class="sub">Rocket Central + Bedrock ES + Mortgage + Rock Events</div></div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">Read</div>
+      <p><strong>Account base is both deeper and broader than last year.</strong> The hotel is winning more from its anchor relationship (Rocket) while simultaneously converting net-new logos (Shady Records, Alacrity, The Line Studios, Ford Motor Co., Ally Financial, Churchill Living, Sirva, Furnished Quarters, etc.). Healthcare (Henry Ford Health) and TMC (AMEXGBT) posted step-change YoY growth off small 2025 bases. The one meaningful top-15 decliner is Detroit Pistons (-57%), consistent with the sports/entertainment pattern noted below.</p>
+    </div>
+  </section>
+
+  <!-- ===================== TOP 15 TABLE ===================== -->
+  <section class="part">
+    <div class="kicker">Q1 2026 vs Q1 2025 · Account Detail</div>
+    <h2 class="ph">Top 15 producing accounts, ranked by 2026 Q1 revenue.</h2>
+
+    <div class="card">
+      <table class="data">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th style="text-align:left;">Account</th>
+            <th>Room Nights '26</th>
+            <th>ADR '26</th>
+            <th>Revenue '26</th>
+            <th>Revenue '25</th>
+            <th>Δ $</th>
+            <th>Δ %</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td style="text-align:right;">1</td><td>Rocket Central</td><td>550</td><td>$337.08</td><td>$185,395</td><td>$154,336</td><td class="pos">+$31,059</td><td class="pos">+20%</td></tr>
+          <tr><td style="text-align:right;">2</td><td>Rocket Bedrock Extended Stay Guest</td><td>356</td><td>$162.06</td><td>$57,694</td><td>—</td><td class="pos">+$57,694</td><td class="pos">NEW</td></tr>
+          <tr><td style="text-align:right;">3</td><td>Rocket Mortgage</td><td>203</td><td>$193.24</td><td>$39,227</td><td>—</td><td class="pos">+$39,227</td><td class="pos">NEW</td></tr>
+          <tr><td style="text-align:right;">4</td><td>Henry Ford Health</td><td>163</td><td>$219.31</td><td>$35,747</td><td>$2,695</td><td class="pos">+$33,052</td><td class="pos">+1,226%</td></tr>
+          <tr><td style="text-align:right;">5</td><td>ROOST Detroit Sales (in-house)</td><td>197</td><td>$171.59</td><td>$33,803</td><td>$32,171</td><td class="pos">+$1,632</td><td class="pos">+5%</td></tr>
+          <tr><td style="text-align:right;">6</td><td>Ford Motor Company</td><td>141</td><td>$234.96</td><td>$33,129</td><td>$30,779</td><td class="pos">+$2,350</td><td class="pos">+8%</td></tr>
+          <tr><td style="text-align:right;">7</td><td>Detroit Opera House</td><td>242</td><td>$136.77</td><td>$33,098</td><td>$11,655</td><td class="pos">+$21,443</td><td class="pos">+184%</td></tr>
+          <tr><td style="text-align:right;">8</td><td>Rock Events</td><td>115</td><td>$279.00</td><td>$32,085</td><td>$19,776</td><td class="pos">+$12,309</td><td class="pos">+62%</td></tr>
+          <tr><td style="text-align:right;">9</td><td>AMEXGBT</td><td>99</td><td>$317.31</td><td>$31,414</td><td>$2,386</td><td class="pos">+$29,028</td><td class="pos">+1,217%</td></tr>
+          <tr><td style="text-align:right;">10</td><td>Detroit Pistons</td><td>116</td><td>$260.51</td><td>$30,219</td><td>$70,588</td><td class="neg">-$40,369</td><td class="neg">-57%</td></tr>
+          <tr><td style="text-align:right;">11</td><td>Method Co.</td><td>137</td><td>$164.02</td><td>$22,470</td><td>$20,265</td><td class="pos">+$2,205</td><td class="pos">+11%</td></tr>
+          <tr><td style="text-align:right;">12</td><td>Alacrity Solutions</td><td>90</td><td>$249.00</td><td>$22,410</td><td>—</td><td class="pos">+$22,410</td><td class="pos">NEW</td></tr>
+          <tr><td style="text-align:right;">13</td><td>Shady Records</td><td>64</td><td>$345.56</td><td>$22,116</td><td>—</td><td class="pos">+$22,116</td><td class="pos">NEW</td></tr>
+          <tr><td style="text-align:right;">14</td><td>ArcelorMittal Tailored Blanks Americas</td><td>90</td><td>$209.00</td><td>$18,810</td><td>$17,910</td><td class="pos">+$900</td><td class="pos">+5%</td></tr>
+          <tr><td style="text-align:right;">15</td><td>Individual Extended Stay</td><td>63</td><td>$274.60</td><td>$17,300</td><td>—</td><td class="pos">+$17,300</td><td class="pos">NEW</td></tr>
+          <tr style="border-top:2px solid var(--slate);"><td></td><td><strong>Top 15 Total</strong></td><td><strong>2,628</strong></td><td><strong>$234</strong></td><td><strong>$614,917</strong></td><td><strong>$362,562</strong></td><td class="pos"><strong>+$252,355</strong></td><td class="pos"><strong>+70%</strong></td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px;">Excludes PMS summary / unallocated transient revenue. ADR on totals is weighted by room nights.</div>
+    </div>
+  </section>
+
+  <!-- ===================== TRENDS ===================== -->
+  <section class="part">
+    <div class="kicker">Notable Shifts · Account Trends</div>
+    <h2 class="ph">Four patterns behind the YoY growth.</h2>
+
+    <div class="two" style="margin-top:10px;">
+      <div class="card">
+        <h3>1 · Rocket ecosystem deepening</h3>
+        <h2>~$314K of top-15 revenue — up from $174K in Q1 '25</h2>
+        <ul>
+          <li><strong>Rocket Central</strong>: $185K (+20% YoY) — still the #1 account by a wide margin.</li>
+          <li><strong>Rocket Bedrock Extended Stay Guest (NEW)</strong>: 356 nights at $162 ADR — a new pattern of longer-stay corporate housing distinct from transient Rocket bookings.</li>
+          <li><strong>Rocket Mortgage (NEW)</strong>: 203 nights direct-sourced from the Rocket Mortgage entity.</li>
+          <li><strong>Rock Events</strong>: $32K (+62%) — group/events demand from the same ownership ecosystem.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>2 · Step-change growth in travel-managed accounts</h3>
+        <h2>Off small 2025 bases — now meaningful contributors</h2>
+        <ul>
+          <li><strong>Henry Ford Health</strong>: $2.7K → $35.7K (+1,226%) on 163 nights.</li>
+          <li><strong>AMEXGBT</strong>: $2.4K → $31.4K (+1,217%) at $317 ADR — strongest rate in the top 15.</li>
+          <li><strong>Detroit Opera House</strong>: $11.7K → $33.1K (+184%) on 242 nights — a high-volume, lower-rate pattern (cast/crew housing).</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="two" style="margin-top:16px;">
+      <div class="card">
+        <h3>3 · Entertainment &amp; corporate-housing newcomers</h3>
+        <h2>Six net-new top-15 accounts</h2>
+        <ul>
+          <li><strong>Shady Records</strong>: $22.1K at $346 ADR — highest rate in top 15.</li>
+          <li><strong>The Line Studios</strong>: $17.3K (62 nights) — creative/production bookings.</li>
+          <li><strong>Alacrity Solutions</strong>: $22.4K — insurance/claims extended stay.</li>
+          <li>Additional new-to-2026 relationships outside top 15: Churchill Living, Sirva, Furnished Quarters, Dwellworks, Ally Financial, Ford Motor Co.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>4 · Pistons, legacy sports, and relocations softening</h3>
+        <h2>Where revenue moved away</h2>
+        <ul>
+          <li><strong>Detroit Pistons</strong>: $70.6K → $30.2K (-57%) — the only top-15 decliner.</li>
+          <li><strong>Outside top 15, lost in 2026:</strong> "Rock" ($45K → $0), ALE Solutions ($21K → $0), Navan Lodging ($14K → $0), SilverDoor ($13K → $0), Nomad ($11K → $0), Detroit Tigers ($8K → $0), Detroit Lions ($6K → $0).</li>
+          <li><strong>Bedrock LLC direct</strong>: $27.8K → $4.0K (-86%) — volume appears to have shifted into the new "Rocket Bedrock Extended Stay" channel.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 3 TAKEAWAYS ===================== -->
+  <section class="part">
+    <div class="kicker">Section 3 · Takeaways</div>
+    <h2 class="ph">The account mix is healthier — and more concentrated — than last year.</h2>
+
+    <div class="take">
+      <div class="t g">
+        <h4>Strengths</h4>
+        <p>Top 15 revenue up +70% YoY; six net-new logos in the top 15; Rocket ecosystem is broadening across transient, extended-stay, and events. Healthcare and TMC wins (Henry Ford Health, AMEXGBT) expand the mix beyond the Rocket anchor.</p>
+      </div>
+      <div class="t">
+        <h4>Watchout</h4>
+        <p>Rocket + Bedrock + Rock Events account for ~51% of top-15 revenue. Anchor concentration is a feature of the site, but worth monitoring as the book grows.</p>
+      </div>
+      <div class="t i">
+        <h4>Opportunity</h4>
+        <p>Several 2025 accounts disappeared in 2026 (ALE Solutions, Navan, SilverDoor, Nomad, Detroit Tigers/Lions). Some of these are reallocations; others are winnable with re-engagement. Worth a lapsed-account audit in Q2.</p>
+      </div>
+      <div class="t w">
+        <h4>Next step</h4>
+        <p>Understand the Detroit Pistons -57% drop (rate, availability, or relationship shift?) and formalize the Rocket Bedrock Extended Stay channel — it's producing but hasn't had a full quarter yet.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 4 BAND ===================== -->
+  <div class="backtocontents-wrap"><a class="backtocontents" href="#contents">Back to Contents</a></div>
+
+  <div class="sectionband" id="section-4">
+    <div>
+      <div class="lbl">Section 4</div>
+      <h2>Length of Stay Performance</h2>
+    </div>
+    <div class="right">LOS Drilldown<br>Q1 2026 vs Q1 2025</div>
+  </div>
+
+  <!-- ===================== LOS SUMMARY ===================== -->
+  <section class="part">
+    <div class="kicker">Length of Stay · Q1 2026 vs Q1 2025</div>
+    <h2 class="ph">The mix is shifting from transient to extended-stay.</h2>
+    <p class="plede">Aggregating every stay into three buckets — Daily (1–6 nights), Weekly (7–29 nights), and Monthly (30+ nights) — shows a clear structural change year-over-year. Daily still contributes the majority of revenue but its share is down ~16 points. Weekly and especially Monthly picked up that share, driving +$177K of incremental Q1 revenue ($1.56M vs $1.39M) almost entirely from longer stays.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="lbl">Daily (1–6 nt) · Revenue Share</div><div class="val">61.7%</div><div class="delta dn">-16.6 pts vs '25</div><div class="sub">2025: 78.3%</div></div>
+      <div class="kpi"><div class="lbl">Weekly (7–29 nt) · Revenue Share</div><div class="val">12.2%</div><div class="delta">+4.2 pts vs '25</div><div class="sub">2025: 8.1%</div></div>
+      <div class="kpi"><div class="lbl">Monthly (30+ nt) · Revenue Share</div><div class="val">26.0%</div><div class="delta">+12.4 pts vs '25</div><div class="sub">2025: 13.7%</div></div>
+      <div class="kpi"><div class="lbl">Monthly Revenue · Q1 '26</div><div class="val">$407K</div><div class="delta">+115% vs Q1 '25</div><div class="sub">Q1 2025: $189K</div></div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">Read</div>
+      <p><strong>Extended-stay is now a second engine.</strong> Monthly room nights more than doubled (1,118 → 2,334) and drove the majority of YoY revenue growth. ADR in that bucket ticked up modestly ($169 → $175), and RevPAR more than doubled. Weekly (7–29 nights) also expanded meaningfully. Daily revenue softened in absolute terms (-$120K) as room nights consumed by extended stay grew — a deliberate mix trade.</p>
+    </div>
+  </section>
+
+  <!-- ===================== LOS CHARTS ===================== -->
+  <section class="part">
+    <div class="kicker">Metric-by-Metric · 2026 vs 2025</div>
+    <h2 class="ph">Three views of the mix shift.</h2>
+    <p class="plede">Each chart uses a fixed axis so bar lengths reflect true scale. 2026 in coral, 2025 in slate. Axis ranges shown under each chart.</p>
+
+    <div class="losgrid">
+
+      <!-- Revenue Contribution % — max 78.3 -->
+      <div class="loschart">
+        <div class="chead">
+          <div class="ctitle-wrap">
+            <div class="ckicker">Revenue Contribution (% of Total)</div>
+            <h2 class="ctitle">Mix is shifting toward longer stays.</h2>
+          </div>
+          <div class="clegend"><span class="l26">2026</span><span class="l25">2025</span></div>
+        </div>
+        <div class="losplot">
+          <div class="losrows">
+          <div class="losrow">
+            <div class="losax">Daily</div>
+            <div class="losbars2">
+              <div class="hb"><div class="hbfill y26" style="width:77.1%;"></div></div>
+              <div class="hb"><div class="hbfill y25" style="width:97.9%;"></div></div>
+            </div>
+            <div class="losvals2">
+              <div class="hbval">61.7%</div>
+              <div class="hbval">78.3%</div>
+            </div>
+          </div>
+          <div class="losrow">
+            <div class="losax">Weekly</div>
+            <div class="losbars2">
+              <div class="hb"><div class="hbfill y26" style="width:15.3%;"></div></div>
+              <div class="hb"><div class="hbfill y25" style="width:10.1%;"></div></div>
+            </div>
+            <div class="losvals2">
+              <div class="hbval">12.2%</div>
+              <div class="hbval">8.1%</div>
+            </div>
+          </div>
+          <div class="losrow">
+            <div class="losax">Monthly</div>
+            <div class="losbars2">
+              <div class="hb"><div class="hbfill y26" style="width:32.5%;"></div></div>
+              <div class="hb"><div class="hbfill y25" style="width:17.1%;"></div></div>
+            </div>
+            <div class="losvals2">
+              <div class="hbval">26.0%</div>
+              <div class="hbval">13.7%</div>
+            </div>
+          </div>
+        </div>
+          <div class="axisbase"></div>
+          <div class="gridline" style="left:84px;"></div>
+          <div class="gridline" style="left:calc(50% + 5px);"></div>
+          <div class="gridline" style="right:74px;"></div>
+          <div class="axislabel left" style="left:84px;">0%</div>
+          <div class="axislabel" style="left:calc(50% + 5px);">40%</div>
+          <div class="axislabel right" style="right:74px;">80%</div>
+        </div>
+      </div>
+
+      <!-- ADR — max $289 -->
+      <div class="loschart">
+        <div class="chead">
+          <div class="ctitle-wrap">
+            <div class="ckicker">Average Daily Rate (ADR)</div>
+            <h2 class="ctitle">ADR is up in every segment.</h2>
+          </div>
+          <div class="clegend"><span class="l26">2026</span><span class="l25">2025</span></div>
+        </div>
+        <div class="losplot">
+          <div class="losrows">
+          <div class="losrow">
+            <div class="losax">Daily</div>
+            <div class="losbars2">
+              <div class="hb"><div class="hbfill y26" style="width:96.3%;"></div></div>
+              <div class="hb"><div class="hbfill y25" style="width:92.7%;"></div></div>
+            </div>
+            <div class="losvals2">
+              <div class="hbval">$289</div>
+              <div class="hbval">$278</div>
+            </div>
+          </div>
+          <div class="losrow">
+            <div class="losax">Weekly</div>
+            <div class="losbars2">
+              <div class="hb"><div class="hbfill y26" style="width:82.0%;"></div></div>
+              <div class="hb"><div class="hbfill y25" style="width:76.0%;"></div></div>
+            </div>
+            <div class="losvals2">
+              <div class="hbval">$246</div>
+              <div class="hbval">$228</div>
+            </div>
+          </div>
+          <div class="losrow">
+            <div class="losax">Monthly</div>
+            <div class="losbars2">
+              <div class="hb"><div class="hbfill y26" style="width:58.3%;"></div></div>
+              <div class="hb"><div class="hbfill y25" style="width:56.3%;"></div></div>
+            </div>
+            <div class="losvals2">
+              <div class="hbval">$175</div>
+              <div class="hbval">$169</div>
+            </div>
+          </div>
+        </div>
+          <div class="axisbase"></div>
+          <div class="gridline" style="left:84px;"></div>
+          <div class="gridline" style="left:calc(50% + 5px);"></div>
+          <div class="gridline" style="right:74px;"></div>
+          <div class="axislabel left" style="left:84px;">$0</div>
+          <div class="axislabel" style="left:calc(50% + 5px);">$150</div>
+          <div class="axislabel right" style="right:74px;">$300</div>
+        </div>
+      </div>
+
+      <!-- Revenue — max $1,086K -->
+      <div class="loschart">
+        <div class="chead">
+          <div class="ctitle-wrap">
+            <div class="ckicker">Revenue ($K)</div>
+            <h2 class="ctitle">Monthly revenue more than doubled.</h2>
+          </div>
+          <div class="clegend"><span class="l26">2026</span><span class="l25">2025</span></div>
+        </div>
+        <div class="losplot">
+          <div class="losrows">
+          <div class="losrow">
+            <div class="losax">Daily</div>
+            <div class="losbars2">
+              <div class="hb"><div class="hbfill y26" style="width:80.5%;"></div></div>
+              <div class="hb"><div class="hbfill y25" style="width:90.5%;"></div></div>
+            </div>
+            <div class="losvals2">
+              <div class="hbval">$966K</div>
+              <div class="hbval">$1,086K</div>
+            </div>
+          </div>
+          <div class="losrow">
+            <div class="losax">Weekly</div>
+            <div class="losbars2">
+              <div class="hb"><div class="hbfill y26" style="width:15.9%;"></div></div>
+              <div class="hb"><div class="hbfill y25" style="width:9.3%;"></div></div>
+            </div>
+            <div class="losvals2">
+              <div class="hbval">$191K</div>
+              <div class="hbval">$112K</div>
+            </div>
+          </div>
+          <div class="losrow">
+            <div class="losax">Monthly</div>
+            <div class="losbars2">
+              <div class="hb"><div class="hbfill y26" style="width:33.9%;"></div></div>
+              <div class="hb"><div class="hbfill y25" style="width:15.8%;"></div></div>
+            </div>
+            <div class="losvals2">
+              <div class="hbval">$407K</div>
+              <div class="hbval">$189K</div>
+            </div>
+          </div>
+        </div>
+          <div class="axisbase"></div>
+          <div class="gridline" style="left:84px;"></div>
+          <div class="gridline" style="left:calc(50% + 5px);"></div>
+          <div class="gridline" style="right:74px;"></div>
+          <div class="axislabel left" style="left:84px;">$0</div>
+          <div class="axislabel" style="left:calc(50% + 5px);">$600K</div>
+          <div class="axislabel right" style="right:74px;">$1,200K</div>
+        </div>
+      </div>
+
+    </div>
+
+    <div style="font-size:11px;color:var(--muted);margin-top:18px;">
+      Daily = 1–6 nights · Weekly = 7–29 nights · Monthly = 30+ nights. Reconciles to Q1 PMS/RMS summary ($1,564,331 / 6,454 nights).
+    </div>
+  </section>
+
+  <!-- ===================== LOS TABLE ===================== -->
+  <section class="part">
+    <div class="kicker">Detail Table</div>
+    <h2 class="ph">Length-of-stay metrics, Q1 2026 vs Q1 2025.</h2>
+
+    <div class="card" style="padding:18px 20px;">
+      <table class="data" style="font-size:12px;">
+        <thead>
+          <tr>
+            <th>Segment</th>
+            <th>RN '26</th>
+            <th>RN '25</th>
+            <th>ADR '26</th>
+            <th>ADR '25</th>
+            <th>Revenue '26</th>
+            <th>Revenue '25</th>
+            <th>Rev Mix '26</th>
+            <th>Rev Mix '25</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Daily (1–6 nt)</td>
+            <td>3,340</td><td>3,906</td>
+            <td>$289</td><td>$278</td>
+            <td>$965,621</td><td>$1,085,676</td>
+            <td>61.7%</td><td>78.3%</td>
+          </tr>
+          <tr>
+            <td>Weekly (7–29 nt)</td>
+            <td>780</td><td>491</td>
+            <td>$246</td><td>$228</td>
+            <td>$191,492</td><td>$112,120</td>
+            <td>12.2%</td><td>8.1%</td>
+          </tr>
+          <tr>
+            <td>Monthly (30+ nt)</td>
+            <td>2,334</td><td>1,118</td>
+            <td>$175</td><td>$169</td>
+            <td>$407,218</td><td>$189,421</td>
+            <td>26.0%</td><td>13.7%</td>
+          </tr>
+          <tr style="border-top:2px solid var(--slate);">
+            <td><strong>Total</strong></td>
+            <td><strong>6,454</strong></td><td><strong>5,515</strong></td>
+            <td><strong>$242</strong></td><td><strong>$252</strong></td>
+            <td><strong>$1,564,331</strong></td><td><strong>$1,387,217</strong></td>
+            <td><strong>100%</strong></td><td><strong>100%</strong></td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 4 TAKEAWAYS ===================== -->
+  <section class="part">
+    <div class="kicker">Section 4 · Takeaways</div>
+    <h2 class="ph">Extended-stay is now a structural part of the business.</h2>
+
+    <div class="take">
+      <div class="t g">
+        <h4>Strengths</h4>
+        <p>Monthly revenue more than doubled ($189K → $407K) and Weekly grew +71% ($112K → $191K). ADR increased in every LOS bucket, confirming the mix shift isn't coming at the cost of rate.</p>
+      </div>
+      <div class="t">
+        <h4>Watchout</h4>
+        <p>Daily revenue is down -$120K YoY and Daily RevPAR slipped from $102 to $91. Some rooms are being consumed by extended-stay displacement — worth validating that the trade is accretive on RevPAR after fully loaded variable costs.</p>
+      </div>
+      <div class="t i">
+        <h4>Opportunity</h4>
+        <p>Monthly ADR sits at $175 — $114 below Daily ADR. If extended stay continues to grow, incremental rate recovery in that bucket is worth +$5–10 per night in total RevPAR.</p>
+      </div>
+      <div class="t w">
+        <h4>Next step</h4>
+        <p>Validate the new Rocket Bedrock Extended Stay channel is priced correctly against the broader extended-stay comp set, and formalize rate tiers by LOS (7, 14, 30+ night thresholds) heading into Q2.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 5 BAND ===================== -->
+  <div class="backtocontents-wrap"><a class="backtocontents" href="#contents">Back to Contents</a></div>
+
+  <div class="sectionband" id="section-5">
+    <div>
+      <div class="lbl">Section 5</div>
+      <h2>STR Performance</h2>
+    </div>
+    <div class="right">STAR Report · Daily · Weekly · Monthly<br>Through February 2026 &amp; Week of Apr 5–11</div>
+  </div>
+
+  <!-- ===================== STR EXEC SUMMARY ===================== -->
+  <section class="part">
+    <div class="kicker">STR Executive Summary</div>
+    <h2 class="ph">Winning share on occupancy. Rate is the opportunity.</h2>
+    <p class="plede">ROOST Detroit is outperforming the comp set on occupancy across every time window — Month, YTD, Running 3-Month, and Running 12-Month. ADR continues to trail the comp set by a meaningful gap (~$25–$30), which keeps RevPAR just below parity with the market even while demand indexes sit well above 100. The strategic read: we are winning demand with price; the next unlock is converting share gains into rate.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="lbl">MPI · Feb 2026</div><div class="val">109.7</div><div class="delta">+16.4 pts YoY</div><div class="sub">Occupancy 58.7% vs comp 53.5%</div></div>
+      <div class="kpi"><div class="lbl">ARI · Feb 2026</div><div class="val">89.3</div><div class="delta dn">-3.7 pts YoY</div><div class="sub">ADR $242 vs comp $271</div></div>
+      <div class="kpi"><div class="lbl">RGI · Feb 2026</div><div class="val">98.0</div><div class="delta">+12.1 pts YoY</div><div class="sub">RevPAR $142 vs comp $145</div></div>
+      <div class="kpi"><div class="lbl">RGI · Running 12M</div><div class="val">96.8</div><div class="delta">+6.2 pts YoY</div><div class="sub">Trend: improving</div></div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">The read</div>
+      <p><strong>Share gains are real and accelerating.</strong> Feb 2026 RevPAR grew +24.8% YoY versus the comp set at +11.4% — more than double the market's pace. Occupancy index (MPI) has climbed from ~93 last February to 109.7 this February, a 16+ point swing. The rate index (ARI) remains the drag: at 89.3 we sit roughly $29 below the comp set on ADR. Closing even half of that gap would push RGI decisively above 100.</p>
+    </div>
+  </section>
+
+  <!-- ===================== STR INDEX MATRIX ===================== -->
+  <section class="part">
+    <div class="kicker">Index Matrix · ROOST vs Comp Set</div>
+    <h2 class="ph">All four time windows tell the same story.</h2>
+
+    <div class="card" style="padding:18px 20px;">
+      <table class="data" style="font-size:12px;">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Occ · ROOST</th>
+            <th>Occ · Comp</th>
+            <th>MPI</th>
+            <th>ADR · ROOST</th>
+            <th>ADR · Comp</th>
+            <th>ARI</th>
+            <th>RevPAR · ROOST</th>
+            <th>RevPAR · Comp</th>
+            <th>RGI</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Current Month (Feb '26)</td><td>58.7%</td><td>53.5%</td><td class="pos"><strong>109.7</strong></td><td>$242</td><td>$271</td><td class="neg">89.3</td><td>$142</td><td>$145</td><td>98.0</td></tr>
+          <tr><td>Year-to-Date (Jan–Feb)</td><td>55.2%</td><td>50.3%</td><td class="pos"><strong>109.7</strong></td><td>$245</td><td>$270</td><td class="neg">90.7</td><td>$135</td><td>$136</td><td>99.5</td></tr>
+          <tr><td>Running 3-Month</td><td>57.1%</td><td>53.0%</td><td class="pos"><strong>107.6</strong></td><td>$248</td><td>$278</td><td class="neg">89.4</td><td>$142</td><td>$147</td><td>96.2</td></tr>
+          <tr><td>Running 12-Month</td><td>68.0%</td><td>64.3%</td><td class="pos"><strong>105.8</strong></td><td>$274</td><td>$299</td><td class="neg">91.5</td><td>$186</td><td>$192</td><td>96.8</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px;">MPI (occupancy), ARI (ADR), and RGI (RevPAR) are indexed against the Detroit comp set, where 100 = parity. Source: STR monthly report, Feb 2026 period.</div>
+    </div>
+  </section>
+
+  <!-- ===================== STR YoY GROWTH ===================== -->
+  <section class="part">
+    <div class="kicker">Year-over-Year Growth · Us vs Market</div>
+    <h2 class="ph">ROOST is outpacing the comp set on both occupancy and RevPAR.</h2>
+
+    <div class="card" style="padding:18px 20px;">
+      <table class="data" style="font-size:12px;">
+        <thead>
+          <tr>
+            <th>Period</th>
+            <th>Occ · ROOST</th>
+            <th>Occ · Comp</th>
+            <th>ADR · ROOST</th>
+            <th>ADR · Comp</th>
+            <th>RevPAR · ROOST</th>
+            <th>RevPAR · Comp</th>
+            <th>RGI Δ</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td>Current Month (Feb '26)</td><td class="pos">+25.3%</td><td>+7.6%</td><td class="neg">-0.4%</td><td>+3.5%</td><td class="pos">+24.8%</td><td>+11.4%</td><td class="pos">+12.1 pts</td></tr>
+          <tr><td>Year-to-Date</td><td class="pos">+11.4%</td><td>+8.0%</td><td class="neg">-3.1%</td><td>-5.4%</td><td class="pos">+8.0%</td><td>+2.2%</td><td class="pos">+5.7 pts</td></tr>
+          <tr><td>Running 3-Month</td><td class="pos">+10.9%</td><td>+6.5%</td><td class="neg">-3.5%</td><td>-2.4%</td><td class="pos">+7.0%</td><td>+4.0%</td><td class="pos">+2.8 pts</td></tr>
+          <tr><td>Running 12-Month</td><td class="pos">+5.6%</td><td>+2.2%</td><td class="pos">+5.0%</td><td>+2.3%</td><td class="pos">+11.0%</td><td>+4.5%</td><td class="pos">+6.2 pts</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px;">RGI Δ = change in RevPAR Generation Index year-over-year. Positive Δ indicates share gain vs. the comp set.</div>
+    </div>
+
+    <div class="tldr" style="margin-top:18px;">
+      <div class="tag">What's driving the lift</div>
+      <p>Running-12-month ADR is up +5.0% at ROOST vs +2.3% at the comp set — so rate growth is also outpacing the market, just from a lower starting base. The current rate gap reflects positioning during the stabilization phase, not a pricing problem. As the property matures and the Rocket-ecosystem and extended-stay volume builds, there's a clear path to rate recovery without sacrificing MPI.</p>
+    </div>
+  </section>
+
+  <!-- ===================== STRATEGIC READ ===================== -->
+  <section class="part">
+    <div class="kicker">Strategic Read</div>
+    <h2 class="ph">Position, share, and rate — in one view.</h2>
+
+    <div class="two half">
+      <div class="card">
+        <h3>Where we sit</h3>
+        <h2>Position &amp; share</h2>
+        <ul>
+          <li><strong>Occupancy leader in our set.</strong> MPI has been above 100 in every time window — current month 109.7, R12M 105.8.</li>
+          <li><strong>Gaining share, not holding.</strong> RGI moved from ~86 a year ago to 98 this February; YTD RGI sits at 99.5.</li>
+          <li><strong>Market is healthy.</strong> Comp-set RevPAR also grew YoY (+11% Feb, +4.5% R12M) — our outperformance is on top of a rising tide.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Rate competitiveness</h3>
+        <h2>Where the gap is</h2>
+        <ul>
+          <li><strong>ARI 89–91 across windows.</strong> ADR sits $25–$30 below comp set, consistent with the stabilization-phase positioning.</li>
+          <li><strong>Rate growth is outpacing the market.</strong> R12M ADR +5.0% at ROOST vs +2.3% at comp — we are closing the gap, not widening it.</li>
+          <li><strong>Ramp pattern, not a pricing defect.</strong> Index trend is improving each period; this is consistent with a property still building rate credibility.</li>
+        </ul>
+      </div>
+    </div>
+
+    <div class="two half" style="margin-top:16px;">
+      <div class="card">
+        <h3>Overall trend</h3>
+        <h2>Market &amp; hotel direction</h2>
+        <ul>
+          <li><strong>Feb '26 was the inflection month.</strong> RevPAR grew +24.8% vs market +11.4% — widest outperformance gap of any window.</li>
+          <li><strong>Mix shift contributing.</strong> Extended-stay volume (Section 4) and Rocket-ecosystem expansion (Section 3) are feeding the occupancy-led story.</li>
+          <li><strong>Rate drag is narrowing.</strong> ARI improved from 87 (R12M prior) toward 91.5 (R12M current).</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Opportunity &amp; concern</h3>
+        <h2>Watch-items</h2>
+        <ul>
+          <li><strong>Opportunity:</strong> Every 5-point move in ARI on current occupancy is worth ~$12–14 of RevPAR — material earnings upside without volume risk.</li>
+          <li><strong>Concern:</strong> Weekly performance (Apr 5–11) was soft vs comp on ARI (89.9). Early-April is typically shoulder season — watch May as true rate test.</li>
+          <li><strong>Watch:</strong> Running-28-day RGI at 92.5 vs week at 97.2 — short-term noise rather than trend, but worth monitoring weekly.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 5 TAKEAWAYS ===================== -->
+  <section class="part">
+    <div class="kicker">Section 5 · Takeaways</div>
+    <h2 class="ph">The market is healthy. We're outpacing it on volume — now for rate.</h2>
+
+    <div class="take">
+      <div class="t g">
+        <h4>Strengths</h4>
+        <p>MPI &gt;100 in every window; R12M RevPAR growth at +11.0% vs market +4.5%. RGI improving +6.2 pts YoY — share is being gained, not held.</p>
+      </div>
+      <div class="t">
+        <h4>Watchout</h4>
+        <p>ARI 89–91 across windows means $25–$30 of rate headroom vs comp set. Rate discipline is important as occupancy stabilizes so the gap narrows instead of becoming a price ceiling.</p>
+      </div>
+      <div class="t i">
+        <h4>Opportunity</h4>
+        <p>Closing half the ARI gap to 95 would move RGI above 100 — unambiguous market outperformance. Feasible as extended-stay volume matures and rate credibility builds.</p>
+      </div>
+      <div class="t w">
+        <h4>Next step</h4>
+        <p>Revenue-management review of BAR strategy vs comp set, informed by the Rocket Bedrock extended-stay channel and a mid-year test-and-hold on published rates in peak months.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 6 BAND ===================== -->
+  <div class="backtocontents-wrap"><a class="backtocontents" href="#contents">Back to Contents</a></div>
+
+  <div class="sectionband" id="section-6">
+    <div>
+      <div class="lbl">Section 6</div>
+      <h2>Le Supreme · Guest Sentiment</h2>
+    </div>
+    <div class="right">Guest Surveys<br>Dec 2025 – Mar 2026</div>
+  </div>
+
+  <!-- ===================== LE SUPREME EXEC SUMMARY ===================== -->
+  <section class="part">
+    <div class="kicker">Le Supreme · Executive Summary</div>
+    <h2 class="ph">Sentiment is strengthening; service is the standout.</h2>
+    <p class="plede">Across Dec 2025 through March 2026, Le Supreme's guest sentiment (likelihood to recommend) has trended meaningfully higher, peaking in March at 93 (vs. 87 in Dec '25). Service has been the category anchor — effectively perfect in two of the last three months — and every category finished the quarter higher than it started it.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="lbl">Sentiment · Mar 2026</div><div class="val">93</div><div class="delta">+6 pts vs Dec '25</div><div class="sub">Likelihood to recommend</div></div>
+      <div class="kpi"><div class="lbl">Overall Score · Mar 2026</div><div class="val">96</div><div class="delta">+5 pts vs Dec '25</div><div class="sub">Highest in period</div></div>
+      <div class="kpi"><div class="lbl">Service Score · Mar 2026</div><div class="val">99</div><div class="delta">+4 pts vs Dec '25</div><div class="sub">Category leader all 3 months</div></div>
+      <div class="kpi"><div class="lbl">Food Score · Mar 2026</div><div class="val">96</div><div class="delta">+7 pts vs Dec '25</div><div class="sub">Biggest category gain</div></div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">The read</div>
+      <p><strong>The restaurant has moved up a tier.</strong> Sentiment (87 → 92 → 90 → 93), Overall (91 → 94 → 93 → 96), Service (95 → 99 → 96 → 99), Food (89 → 90 → 91 → 96), and Atmosphere (93 → 96 → 95 → 97) all finished higher than they started. Hospitality &amp; Friendliness rebounded from 89 in December to 99 in March — the biggest single service-line improvement. Food, which had been the slowest-improving category, posted its strongest month of the period in March.</p>
+    </div>
+  </section>
+
+  <!-- ===================== LE SUPREME TREND TABLE ===================== -->
+  <section class="part">
+    <div class="kicker">Monthly Trend · Category Scores (0–100)</div>
+    <h2 class="ph">Five months of guest survey data at a glance.</h2>
+
+    <div class="card" style="padding:18px 20px;">
+      <table class="data" style="font-size:12px;">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Dec '25</th>
+            <th>Jan '26</th>
+            <th>Feb '26</th>
+            <th>Mar '26</th>
+            <th>Δ (Dec → Mar)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Sentiment (Likelihood to Recommend)</strong></td><td>87</td><td>92</td><td>90</td><td>93</td><td class="pos">+6 pts</td></tr>
+          <tr><td>Overall Score</td><td>91</td><td>94</td><td>93</td><td>96</td><td class="pos">+5 pts</td></tr>
+          <tr><td>Service</td><td>95</td><td>99</td><td>96</td><td>99</td><td class="pos">+4 pts</td></tr>
+          <tr><td>Food</td><td>89</td><td>90</td><td>91</td><td>96</td><td class="pos">+7 pts</td></tr>
+          <tr><td>Atmosphere</td><td>93</td><td>96</td><td>95</td><td>97</td><td class="pos">+4 pts</td></tr>
+          <tr style="border-top:2px solid var(--slate);"><td># of Surveys</td><td>180</td><td>130</td><td>137</td><td>119</td><td class="neu">declining</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px;">Scores on a 0–100 scale; comparison window is Dec 2025 through March 2026.</div>
+    </div>
+  </section>
+
+  <!-- ===================== STRENGTHS / WEAKNESSES ===================== -->
+  <section class="part">
+    <div class="kicker">Service Strengths &amp; Weaknesses</div>
+    <h2 class="ph">Where guests are reacting well — and where they aren't.</h2>
+
+    <div class="two half">
+      <div class="card">
+        <h3>Strengths</h3>
+        <h2>What guests are consistently praising</h2>
+        <ul>
+          <li><strong>Service execution is near-perfect.</strong> Service score 99 in Jan, 96 in Feb, 99 in Mar. Host rating has been 97–100 in every month.</li>
+          <li><strong>Hospitality &amp; Friendliness rebounded strongly.</strong> 89 (Dec) → 96 (Jan) → 91 (Feb) → 99 (Mar). Biggest service-line improvement in the period.</li>
+          <li><strong>Atmosphere consistently strong.</strong> All months 93+; Restaurant Cleanliness 97–100; Restroom Cleanliness 93–100.</li>
+          <li><strong>Most servers rating in the 90s.</strong> Top-tier servers (LeVigne, Greco, Duncan, Tracey, Denham) scored 100 across overall, sentiment, and service in Jan '26.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Weaknesses</h3>
+        <h2>Where the drag is</h2>
+        <ul>
+          <li><strong>Food took longest to move.</strong> Dec 89 → Jan 90 → Feb 91 before jumping to 96 in March. Still more variable than Service or Atmosphere; taste scores show split results across survey questions.</li>
+          <li><strong>Sentiment dipped in February.</strong> Likelihood to Recommend softened 92 → 90 month-over-month before recovering to 93 in March. Worth examining February guest comments for the reason.</li>
+          <li><strong>Long-tail server performance.</strong> A small number of servers scored in the mid-80s or below on Overall and Food categories, creating variance guests can feel at a table level.</li>
+          <li><strong>Survey volume is declining.</strong> 180 → 130 → 137 → 119 — suggests either lower covers, lower survey capture, or both. Worth investigating whether the capture rate has changed.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 6 TAKEAWAYS ===================== -->
+  <section class="part">
+    <div class="kicker">Section 6 · Takeaways</div>
+    <h2 class="ph">Every category finished Q1 higher than it started.</h2>
+
+    <div class="take">
+      <div class="t g">
+        <h4>Strengths</h4>
+        <p>Sentiment up +6 pts since December; Overall score at a four-month high; Service category essentially perfect. Hospitality &amp; Friendliness rebound (+10 pts) is the most meaningful service-line improvement.</p>
+      </div>
+      <div class="t">
+        <h4>Watchout</h4>
+        <p>Survey volume is declining (180 → 119). Confirm whether it's a cover-count issue, a capture-rate issue, or both — the score gains are less convincing on a shrinking denominator.</p>
+      </div>
+      <div class="t i">
+        <h4>Opportunity</h4>
+        <p>Food is the most leveraged category — it posted the biggest gain (+7 pts) in Q1. Holding March's level and building on it is the clearest path to lifting Overall above 96.</p>
+      </div>
+      <div class="t w">
+        <h4>Next step</h4>
+        <p>Refresh the server-level scorecard to identify the 2–3 individuals dragging the long tail, and audit the survey capture process to understand the volume drop.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 7 BAND ===================== -->
+  <div class="backtocontents-wrap"><a class="backtocontents" href="#contents">Back to Contents</a></div>
+
+  <div class="sectionband" id="section-7">
+    <div>
+      <div class="lbl">Section 7</div>
+      <h2>Hiroki-San · Guest Sentiment</h2>
+    </div>
+    <div class="right">Guest Surveys<br>Dec 2025 – Mar 2026</div>
+  </div>
+
+  <!-- ===================== HIROKI-SAN EXEC SUMMARY ===================== -->
+  <section class="part">
+    <div class="kicker">Hiroki-San · Executive Summary</div>
+    <h2 class="ph">Service is rising; atmosphere is softening; sentiment is holding.</h2>
+    <p class="plede">Hiroki-San's quarter tells a split story. Service has meaningfully strengthened — Server Confidence climbed from 86 in December to 100 in February and March, lifting the Service category score +6 pts over the period. Atmosphere, historically the restaurant's strongest category, eased in March and is the main reason Overall slipped from 94 in February back to 91. Sentiment has been steady in the high 80s throughout.</p>
+
+    <div class="kpi-row">
+      <div class="kpi"><div class="lbl">Sentiment · Mar 2026</div><div class="val">89</div><div class="delta">+3 pts vs Dec '25</div><div class="sub">Likelihood to recommend</div></div>
+      <div class="kpi"><div class="lbl">Service Score · Mar 2026</div><div class="val">96</div><div class="delta">+6 pts vs Dec '25</div><div class="sub">Biggest category gain</div></div>
+      <div class="kpi"><div class="lbl">Atmosphere Score · Mar 2026</div><div class="val">91</div><div class="delta dn">-5 pts vs Dec '25</div><div class="sub">Watch-item (Mar dip)</div></div>
+      <div class="kpi"><div class="lbl">Food Score · Mar 2026</div><div class="val">93</div><div class="delta dn">-2 pts vs Dec '25</div><div class="sub">Mild erosion, still strong</div></div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">The read</div>
+      <p><strong>The experience is getting more professional but losing some of its ambience edge.</strong> Service and hosting have tightened (Host rating 91 → 100, Server Confidence 86 → 100), and the team's top performers (Watkins, Seay, Rendon, Torres, Smith, Schussel, Jaq, Kayla) are scoring perfect or near-perfect. At the same time Atmosphere question scores dropped from 95 in January to 87 in March, and Restroom Cleanliness slipped from 100 to 90 — the kind of signals that erode overall perception even when service is strong. Survey volume has also fallen meaningfully (65 → 67 → 58 → 44).</p>
+    </div>
+  </section>
+
+  <!-- ===================== HIROKI-SAN TREND TABLE ===================== -->
+  <section class="part">
+    <div class="kicker">Monthly Trend · Category Scores (0–100)</div>
+    <h2 class="ph">Four months of guest survey data at a glance.</h2>
+
+    <div class="card" style="padding:18px 20px;">
+      <table class="data" style="font-size:12px;">
+        <thead>
+          <tr>
+            <th>Category</th>
+            <th>Dec '25</th>
+            <th>Jan '26</th>
+            <th>Feb '26</th>
+            <th>Mar '26</th>
+            <th>Δ (Dec → Mar)</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr><td><strong>Sentiment (Likelihood to Recommend)</strong></td><td>86</td><td>88</td><td>89</td><td>89</td><td class="pos">+3 pts</td></tr>
+          <tr><td>Overall Score</td><td>91</td><td>92</td><td>94</td><td>91</td><td class="neu">flat</td></tr>
+          <tr><td>Service</td><td>90</td><td>92</td><td>95</td><td>96</td><td class="pos">+6 pts</td></tr>
+          <tr><td>Food</td><td>95</td><td>94</td><td>93</td><td>93</td><td class="neg">-2 pts</td></tr>
+          <tr><td>Atmosphere</td><td>96</td><td>97</td><td>96</td><td>91</td><td class="neg">-5 pts</td></tr>
+          <tr style="border-top:2px solid var(--slate);"><td># of Surveys</td><td>65</td><td>67</td><td>58</td><td>44</td><td class="neg">-32%</td></tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px;">Scores on a 0–100 scale; comparison window is Dec 2025 through March 2026.</div>
+    </div>
+  </section>
+
+  <!-- ===================== STRENGTHS / WEAKNESSES ===================== -->
+  <section class="part">
+    <div class="kicker">Service Strengths &amp; Weaknesses</div>
+    <h2 class="ph">Where guests are reacting well — and where they aren't.</h2>
+
+    <div class="two half">
+      <div class="card">
+        <h3>Strengths</h3>
+        <h2>What guests are consistently praising</h2>
+        <ul>
+          <li><strong>Server Confidence transformed.</strong> Climbed from 86 (Dec) to 95 (Jan) to 100 (Feb &amp; Mar) — the single biggest service-line improvement in the period.</li>
+          <li><strong>Host execution sharpened.</strong> Host rating 91 → 89 → 93 → 100 — a genuine improvement, not a bounce.</li>
+          <li><strong>Restaurant cleanliness perfect every month.</strong> 100 in Dec, Jan, Feb, and Mar — a consistent baseline.</li>
+          <li><strong>Top server bench is deep.</strong> Multiple servers scoring 97–100 across Overall, Sentiment, and Service (Watkins, Seay, Rendon, Torres, Smith, Schussel, Jaq, Kayla).</li>
+          <li><strong>Sentiment is stable, not declining.</strong> 86 → 88 → 89 → 89, holding in the high 80s throughout.</li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Weaknesses</h3>
+        <h2>Where the drag is</h2>
+        <ul>
+          <li><strong>Atmosphere softened in March.</strong> Atmosphere question: 90 → 95 → 92 → 87. Restroom Cleanliness: 100 → 100 → 100 → 90. Historically the category strength, now trending down.</li>
+          <li><strong>Hospitality &amp; Friendliness regression.</strong> 98 (Dec) → 91 (Jan) and has not recovered (92 / 92). Inconsistent with the improvement in Server Confidence and Host rating.</li>
+          <li><strong>Food mildly eroding.</strong> 95 → 94 → 93 → 93. Still strong, but the trend is downward, not upward.</li>
+          <li><strong>Tuesday daypart is the low point.</strong> Tuesday Sentiment scores of 80 (Feb) and 70 (Mar) well below other days; Tuesday Food 65 (Feb) and 73 (Mar).</li>
+          <li><strong>Survey volume dropped sharply.</strong> 65 → 67 → 58 → 44. Mar survey count is 32% below December — capture or cover concern, or both.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 7 TAKEAWAYS ===================== -->
+  <section class="part">
+    <div class="kicker">Section 7 · Takeaways</div>
+    <h2 class="ph">The service side is getting stronger. The room is asking for attention.</h2>
+
+    <div class="take">
+      <div class="t g">
+        <h4>Strengths</h4>
+        <p>Service category +6 pts over the quarter with Server Confidence at a perfect 100 in the last two months. Host execution and cleanliness baselines are both at or near perfect. Sentiment is stable in the high 80s.</p>
+      </div>
+      <div class="t">
+        <h4>Watchout</h4>
+        <p>Atmosphere dropped -5 pts in March, Food is gently eroding, and Hospitality &amp; Friendliness hasn't recovered from the December-to-January dip. These softer categories are why Overall slipped from 94 (Feb) back to 91 (Mar).</p>
+      </div>
+      <div class="t i">
+        <h4>Opportunity</h4>
+        <p>With Service already near ceiling, lifting Atmosphere and Hospitality &amp; Friendliness back to their earlier levels is the clearest path to pushing Overall above 94. A focused review of Tuesday operations could also lift the weakest-day performance.</p>
+      </div>
+      <div class="t w">
+        <h4>Next step</h4>
+        <p>Diagnose the March Atmosphere dip (ambience, temperature, noise, restroom upkeep?) and investigate the 32% survey-volume decline — confirm whether it's fewer covers or lower capture rate.</p>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 8 BAND ===================== -->
+  <div class="backtocontents-wrap"><a class="backtocontents" href="#contents">Back to Contents</a></div>
+
+  <div class="sectionband" id="section-8">
+    <div>
+      <div class="lbl">Section 8</div>
+      <h2>Book Tower F&amp;B · March 2026</h2>
+    </div>
+    <div class="right">Consolidated Performance<br>Act vs Budget</div>
+  </div>
+
+  <!-- ===================== MARCH 2026 F&B ===================== -->
+  <section class="part">
+    <div class="kicker">Consolidated Month · March 2026</div>
+    <h2 class="ph">F&amp;B platform missed budget by ~$205K on revenue; profitability compressed.</h2>
+    <p class="plede">Every outlet posted revenue below budget in March, with the shortfall concentrated at Le Supreme + Bar Rotunda and Hiroki-San as the platform's revenue drivers. Consolidated Gross Profit came in at 72.6% (vs 75.0% budget) and Operating Profit at 18.5% (vs 27.6% budget). NOP Before Debt Service finished -$192K vs budget of -$116K — a $76K miss that was widened by Kamper's and Anthology fixed-cost drag.</p>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="lbl">Revenue · March</div>
+        <div class="val">$937K</div>
+        <div class="delta dn">-$205K (-18%) vs budget</div>
+        <div class="py-line">PY: <span class="py-val">$1,045K</span> <span class="py-delta neg">-$108K (-10%) vs PY</span></div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Gross Profit Margin</div>
+        <div class="val">72.6%</div>
+        <div class="delta dn">-2.4 pts vs budget</div>
+        <div class="py-line">PY: <span class="py-val">74.7%</span> <span class="py-delta neg">-2.1 pts vs PY</span></div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Labor % of Revenue</div>
+        <div class="val">54.1%</div>
+        <div class="delta dn">+6.6 pts vs budget</div>
+        <div class="py-line">PY: <span class="py-val">54.8%</span> <span class="py-delta pos">-0.7 pts vs PY</span></div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">NOP Before Debt Service</div>
+        <div class="val">-$192K</div>
+        <div class="delta dn">-$76K vs budget</div>
+        <div class="py-line">PY: <span class="py-val">-$219K</span> <span class="py-delta pos">+$27K vs PY</span></div>
+      </div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">The read</div>
+      <p><strong>Two drivers, two drags.</strong> Le Supreme and Hiroki-San produced ~83% of March revenue ($778K of $937K) but also absorbed most of the budget miss. Kamper's and Anthology are smaller (~17% of revenue) but their Prime Cost ratios — 107% and 142% — create outsized margin pressure. Fixed-cost deleverage at lower revenue is the biggest single driver of the March NOP shortfall.</p>
+    </div>
+
+    <h3 style="font-size:11px;color:var(--coral);letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin:26px 0 10px;">Outlet Scorecards · March 2026</h3>
+    <div class="outlets">
+      <div class="outlet warn">
+        <div class="outlet-head">
+          <div class="name">Le Supreme + Bar Rotunda</div>
+          <div class="rev">$456K<small>vs $572K bud</small></div>
+        </div>
+        <div class="outlet-grid">
+          <div><div class="om">Rev vs Bud</div><div class="ov neg">-$116K (-20%)</div></div>
+          <div><div class="om">GP Margin</div><div class="ov">71.1%</div></div>
+          <div><div class="om">Labor %</div><div class="ov mid">44.7%</div></div>
+          <div><div class="om">Prime %</div><div class="ov">73.6%</div></div>
+          <div><div class="om">Operating Profit</div><div class="ov">$120K (26.4%)</div></div>
+          <div><div class="om">NOP Before Debt</div><div class="ov neg">-$28K (-6.2%)</div></div>
+        </div>
+        <div class="note">Primary revenue driver missed plan materially. Labor held in range but fixed costs not fully absorbed.</div>
+      </div>
+
+      <div class="outlet warn">
+        <div class="outlet-head">
+          <div class="name">Hiroki-San</div>
+          <div class="rev">$323K<small>vs $376K bud</small></div>
+        </div>
+        <div class="outlet-grid">
+          <div><div class="om">Rev vs Bud</div><div class="ov neg">-$53K (-14%)</div></div>
+          <div><div class="om">GP Margin</div><div class="ov">69.6%</div></div>
+          <div><div class="om">Labor %</div><div class="ov pos">40.2%</div></div>
+          <div><div class="om">Prime %</div><div class="ov">70.7%</div></div>
+          <div><div class="om">Operating Profit</div><div class="ov">$95K (29.3%)</div></div>
+          <div><div class="om">NOP Before Debt</div><div class="ov neg">-$12K (-3.7%)</div></div>
+        </div>
+        <div class="note">Second-largest contributor. Labor discipline was strong but revenue short of plan led to a small NOP loss for the month.</div>
+      </div>
+
+      <div class="outlet bad">
+        <div class="outlet-head">
+          <div class="name">Kamper's</div>
+          <div class="rev">$73K<small>vs $103K bud</small></div>
+        </div>
+        <div class="outlet-grid">
+          <div><div class="om">Rev vs Bud</div><div class="ov neg">-$30K (-29%)</div></div>
+          <div><div class="om">GP Margin</div><div class="ov">80.2%</div></div>
+          <div><div class="om">Labor %</div><div class="ov neg">87.5%</div></div>
+          <div><div class="om">Prime %</div><div class="ov neg">107.3%</div></div>
+          <div><div class="om">Operating Profit</div><div class="ov neg">-$5K (-7.3%)</div></div>
+          <div><div class="om">NOP Before Debt</div><div class="ov neg">-$55K (-75.5%)</div></div>
+        </div>
+        <div class="note">Prime cost above 100% of revenue. Labor structure is too heavy for current volume — fundamental re-base needed.</div>
+      </div>
+
+      <div class="outlet bad">
+        <div class="outlet-head">
+          <div class="name">Anthology</div>
+          <div class="rev">$86K<small>vs $92K bud</small></div>
+        </div>
+        <div class="outlet-grid">
+          <div><div class="om">Rev vs Bud</div><div class="ov neg">-$6K (-6%)</div></div>
+          <div><div class="om">GP Margin</div><div class="ov">85.6%</div></div>
+          <div><div class="om">Labor %</div><div class="ov neg">127.6%</div></div>
+          <div><div class="om">Prime %</div><div class="ov neg">142.0%</div></div>
+          <div><div class="om">Operating Profit</div><div class="ov neg">-$36K (-42.0%)</div></div>
+          <div><div class="om">NOP Before Debt</div><div class="ov neg">-$97K (-112.8%)</div></div>
+        </div>
+        <div class="note">Strong GP margin but labor structure is more than revenue. Event volume needs to catch up with fixed payroll or payroll needs to resize.</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 9 BAND ===================== -->
+  <div class="backtocontents-wrap"><a class="backtocontents" href="#contents">Back to Contents</a></div>
+
+  <div class="sectionband" id="section-9">
+    <div>
+      <div class="lbl">Section 9</div>
+      <h2>Book Tower F&amp;B · Q1 2026 YTD</h2>
+    </div>
+    <div class="right">Consolidated YTD<br>Jan – Mar</div>
+  </div>
+
+  <!-- ===================== Q1 YTD F&B ===================== -->
+  <section class="part">
+    <div class="kicker">Consolidated YTD · Q1 2026</div>
+    <h2 class="ph">Q1 revenue $245K short of budget; profitability trending ~$183K below plan.</h2>
+    <p class="plede">The quarter reinforces the March read: Le Supreme and Hiroki-San together drove 80% of platform revenue and most of the budget gap. Kamper's extended its Prime Cost above 100% for the quarter; Anthology actually beat budget on revenue (+$102K / +38%) but still lost $259K on NOP driven by fixed labor. Consolidated OP margin of 20.1% is 6 pts below plan; Book Tower NOP before debt service for Q1 finished -$581K.</p>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="lbl">Revenue · Q1</div>
+        <div class="val">$2.99M</div>
+        <div class="delta dn">-$245K (-8%) vs budget</div>
+        <div class="py-line">PY: <span class="py-val">$3.02M</span> <span class="py-delta neg">-$34K (-1%) vs PY</span></div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Gross Profit Margin</div>
+        <div class="val">73.1%</div>
+        <div class="delta dn">-1.9 pts vs budget</div>
+        <div class="py-line">PY: <span class="py-val">73.1%</span> <span class="py-delta neu">flat vs PY</span></div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Labor % of Revenue</div>
+        <div class="val">52.9%</div>
+        <div class="delta dn">+4.1 pts vs budget</div>
+        <div class="py-line">PY: <span class="py-val">53.3%</span> <span class="py-delta pos">-0.4 pts vs PY</span></div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">NOP Before Debt Service</div>
+        <div class="val">-$581K</div>
+        <div class="delta dn">-$183K vs budget</div>
+        <div class="py-line">PY: <span class="py-val">-$632K</span> <span class="py-delta pos">+$51K vs PY</span></div>
+      </div>
+    </div>
+
+    <div class="tldr">
+      <div class="tag">The read</div>
+      <p><strong>Revenue concentration is real and so is the margin pressure.</strong> Le Supreme and Hiroki-San combined represent $2.40M of the $2.99M quarterly revenue. The three-month operating-profit shortfall is -$243K vs budget; two-thirds of that comes from Le Supreme alone. Kamper's and Anthology contribute only 20% of revenue but their combined NOP loss for the quarter is -$411K — 71% of the platform's NOP deficit.</p>
+    </div>
+
+    <h3 style="font-size:11px;color:var(--coral);letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin:26px 0 10px;">Outlet Scorecards · Q1 YTD 2026</h3>
+    <div class="outlets">
+      <div class="outlet warn">
+        <div class="outlet-head">
+          <div class="name">Le Supreme + Bar Rotunda</div>
+          <div class="rev">$1.41M<small>vs $1.65M bud</small></div>
+        </div>
+        <div class="outlet-grid">
+          <div><div class="om">Rev vs Bud</div><div class="ov neg">-$236K (-14%)</div></div>
+          <div><div class="om">GP Margin</div><div class="ov">70.2%</div></div>
+          <div><div class="om">Labor %</div><div class="ov mid">46.4%</div></div>
+          <div><div class="om">Prime %</div><div class="ov">76.3%</div></div>
+          <div><div class="om">Operating Profit</div><div class="ov">$335K (23.7%)</div></div>
+          <div><div class="om">NOP Before Debt</div><div class="ov neg">-$125K (-8.9%)</div></div>
+        </div>
+        <div class="note">47% of platform revenue. Biggest single contributor to Q1 budget miss — needs volume recovery to flow through.</div>
+      </div>
+
+      <div class="outlet good">
+        <div class="outlet-head">
+          <div class="name">Hiroki-San</div>
+          <div class="rev">$985K<small>vs $1.05M bud</small></div>
+        </div>
+        <div class="outlet-grid">
+          <div><div class="om">Rev vs Bud</div><div class="ov mid">-$67K (-6%)</div></div>
+          <div><div class="om">GP Margin</div><div class="ov">71.2%</div></div>
+          <div><div class="om">Labor %</div><div class="ov pos">40.4%</div></div>
+          <div><div class="om">Prime %</div><div class="ov pos">69.2%</div></div>
+          <div><div class="om">Operating Profit</div><div class="ov">$303K (30.8%)</div></div>
+          <div><div class="om">NOP Before Debt</div><div class="ov neg">-$44K (-4.5%)</div></div>
+        </div>
+        <div class="note">Tightest run rate in the portfolio. Revenue 6% short of plan but margin discipline minimized the profit impact.</div>
+      </div>
+
+      <div class="outlet bad">
+        <div class="outlet-head">
+          <div class="name">Kamper's</div>
+          <div class="rev">$217K<small>vs $261K bud</small></div>
+        </div>
+        <div class="outlet-grid">
+          <div><div class="om">Rev vs Bud</div><div class="ov neg">-$44K (-17%)</div></div>
+          <div><div class="om">GP Margin</div><div class="ov">81.4%</div></div>
+          <div><div class="om">Labor %</div><div class="ov neg">84.5%</div></div>
+          <div><div class="om">Prime %</div><div class="ov neg">103.1%</div></div>
+          <div><div class="om">Operating Profit</div><div class="ov neg">-$7K (-3.1%)</div></div>
+          <div><div class="om">NOP Before Debt</div><div class="ov neg">-$152K (-70.0%)</div></div>
+        </div>
+        <div class="note">Structurally under-sized for its cost base. Every month's fixed overhead wipes out GP. Action needed.</div>
+      </div>
+
+      <div class="outlet bad">
+        <div class="outlet-head">
+          <div class="name">Anthology</div>
+          <div class="rev">$372K<small>vs $270K bud</small></div>
+        </div>
+        <div class="outlet-grid">
+          <div><div class="om">Rev vs Bud</div><div class="ov pos">+$102K (+38%)</div></div>
+          <div><div class="om">GP Margin</div><div class="ov pos">84.1%</div></div>
+          <div><div class="om">Labor %</div><div class="ov neg">92.1%</div></div>
+          <div><div class="om">Prime %</div><div class="ov neg">108.1%</div></div>
+          <div><div class="om">Operating Profit</div><div class="ov neg">-$30K (-8.1%)</div></div>
+          <div><div class="om">NOP Before Debt</div><div class="ov neg">-$259K (-69.8%)</div></div>
+        </div>
+        <div class="note">Revenue well ahead of plan — but fixed costs (labor + management) still overwhelm contribution. Improved vs PY ($82K better NOP).</div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 10 BAND ===================== -->
+  <div class="backtocontents-wrap"><a class="backtocontents" href="#contents">Back to Contents</a></div>
+
+  <div class="sectionband" id="section-10">
+    <div>
+      <div class="lbl">Section 10</div>
+      <h2>Book Tower F&amp;B · 2026 Forecast</h2>
+    </div>
+    <div class="right">Full-Year Outlook<br>Forecast Roll-Up</div>
+  </div>
+
+  <!-- ===================== FORECAST SUMMARY ===================== -->
+  <section class="part">
+    <div class="kicker">2026 Full-Year Forecast · By Outlet + Roll-Up</div>
+    <h2 class="ph">Forecast builds a $18.1M platform returning to meaningful profitability.</h2>
+    <p class="plede">Combining the four outlet forecasts produces a Book Tower F&amp;B total of $18.1M in revenue, $14.0M Gross Profit (77.0% margin), $6.8M Operating Profit (37.6%), and $906K NOP Before Debt Service (5.0%) — a material improvement versus 2025 actuals. Anthology and Hiroki-San both flip from prior-year NOP losses to forecast profits; Le Supreme and Kamper's continue to anchor the portfolio.</p>
+
+    <div class="kpi-row">
+      <div class="kpi">
+        <div class="lbl">Revenue · FY Forecast</div>
+        <div class="val">$18.12M</div>
+        <div class="delta">4 outlets rolled up</div>
+        <div class="py-line">PY: <span class="py-val">$17.44M</span> <span class="py-delta pos">+$680K (+3.9%) vs PY</span></div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Gross Profit Margin</div>
+        <div class="val">77.0%</div>
+        <div class="delta">$13.94M GP</div>
+        <div class="py-line">PY: <span class="py-val">76.9%</span> <span class="py-delta pos">+0.1 pts vs PY</span></div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">Labor % of Revenue</div>
+        <div class="val">39.3%</div>
+        <div class="delta">Prime Cost 62.4%</div>
+        <div class="py-line">PY: <span class="py-val">41.5%</span> <span class="py-delta pos">-2.2 pts vs PY</span></div>
+      </div>
+      <div class="kpi">
+        <div class="lbl">NOP Before Debt Service</div>
+        <div class="val">$906K</div>
+        <div class="delta">5.0% NOP margin</div>
+        <div class="py-line">PY: <span class="py-val">$152K</span> <span class="py-delta pos">+$754K vs PY</span></div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:18px 20px;margin-top:22px;">
+      <h3>2026 Forecast · Outlet-by-Outlet + Book Tower Total</h3>
+      <h2>Four outlets, one roll-up</h2>
+      <table class="data" style="font-size:12px;">
+        <thead>
+          <tr>
+            <th>Outlet</th>
+            <th>Revenue</th>
+            <th>GP %</th>
+            <th>Labor %</th>
+            <th>Prime %</th>
+            <th>Operating Profit</th>
+            <th>OP %</th>
+            <th>NOP Before Debt</th>
+            <th>Net Cash Flow</th>
+            <th>Outlook</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr>
+            <td>Le Supreme + Bar Rotunda</td>
+            <td>$7.04M</td>
+            <td>72.1%</td>
+            <td>38.4%</td>
+            <td>66.3%</td>
+            <td>$2,374K</td>
+            <td>33.7%</td>
+            <td class="pos">$264K (3.7%)</td>
+            <td class="pos">$202K</td>
+            <td class="pos">Improving</td>
+          </tr>
+          <tr>
+            <td>Hiroki-San</td>
+            <td>$4.27M</td>
+            <td>72.4%</td>
+            <td>38.0%</td>
+            <td>65.6%</td>
+            <td>$1,468K</td>
+            <td>34.4%</td>
+            <td class="mid" style="color:#D4A017;font-weight:700;">$41K (1.0%)</td>
+            <td class="neu" style="color:var(--muted);">thin</td>
+            <td class="mid" style="color:#D4A017;font-weight:700;">Stable, thin NOP</td>
+          </tr>
+          <tr>
+            <td>Kamper's</td>
+            <td>$2.46M</td>
+            <td>82.9%</td>
+            <td>37.4%</td>
+            <td>54.6%</td>
+            <td>$1,118K</td>
+            <td>45.4%</td>
+            <td class="pos">$243K (9.9%)</td>
+            <td class="pos">$201K</td>
+            <td class="pos">Improving (flip to +)</td>
+          </tr>
+          <tr>
+            <td>Anthology</td>
+            <td>$4.35M</td>
+            <td>85.9%</td>
+            <td>43.2%</td>
+            <td>57.3%</td>
+            <td>$1,856K</td>
+            <td>42.7%</td>
+            <td class="pos">$359K (8.3%)</td>
+            <td class="pos">$277K</td>
+            <td class="pos">Improving (event-led)</td>
+          </tr>
+          <tr style="border-top:2px solid var(--slate);">
+            <td><strong>Book Tower F&amp;B · Total</strong></td>
+            <td><strong>$18.12M</strong></td>
+            <td><strong>77.0%</strong></td>
+            <td><strong>39.3%</strong></td>
+            <td><strong>62.4%</strong></td>
+            <td><strong>$6,816K</strong></td>
+            <td><strong>37.6%</strong></td>
+            <td class="pos"><strong>$906K (5.0%)</strong></td>
+            <td class="pos"><strong>$582K</strong></td>
+            <td class="pos"><strong>Recovering</strong></td>
+          </tr>
+        </tbody>
+      </table>
+      <div style="font-size:11px;color:var(--muted);margin-top:10px;">Forecast roll-up = sum of four outlet Profit &amp; Loss_Detail forecasts (Jan–Mar actuals + Apr–Jun forecast + Jul–Dec budget). Currency shown in $K or $M as marked.</div>
+    </div>
+
+    <div class="two half" style="margin-top:22px;">
+      <div class="card">
+        <h3>Outlet outlook</h3>
+        <h2>What the full-year shape is telling us</h2>
+        <ul>
+          <li><strong>Le Supreme + Bar Rotunda:</strong> forecast delivers $7.04M rev and 33.7% OP. Volume seasonality fills in the Q1 hole and the NOP flips positive on the year. <em>Improving.</em></li>
+          <li><strong>Hiroki-San:</strong> $4.27M rev and 34.4% OP, but NOP only $41K (1.0%) — management fees and allocations consume most of the OP. <em>Stable but thinly profitable at NOP line.</em></li>
+          <li><strong>Kamper's:</strong> $2.46M rev with strong GP (82.9%) flips the outlet from Q1 loss to $243K full-year NOP. Relies on season ramp. <em>Improving; requires volume.</em></li>
+          <li><strong>Anthology:</strong> $4.35M rev delivers $359K NOP on event-driven Q2–Q4 volume. Q1 already ahead of plan supports this trajectory. <em>Improving; event calendar is the variable.</em></li>
+        </ul>
+      </div>
+
+      <div class="card">
+        <h3>Book Tower roll-up</h3>
+        <h2>Full-year shape</h2>
+        <ul>
+          <li><strong>$18.1M revenue, $14.0M GP (77.0% margin)</strong> — healthy top-line scale.</li>
+          <li><strong>$6.82M Operating Profit (37.6%)</strong> — every outlet delivers meaningful OP at the forecast level.</li>
+          <li><strong>$906K NOP Before Debt Service (5.0%)</strong> — modest platform profitability after fees, management, and allocations.</li>
+          <li><strong>$582K Net Cash Flow</strong> — positive cash generation, but a thin margin for execution risk.</li>
+          <li>Forecast pivot is heavily back-loaded: Q1 actuals are -$581K NOP, so Q2–Q4 must deliver ~$1.49M NOP to hit $906K FY.</li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== SECTION 10 TAKEAWAYS ===================== -->
+  <section class="part">
+    <div class="kicker">Sections 8–10 · Takeaways</div>
+    <h2 class="ph">Platform story: revenue concentration, margin pressure, seasonal recovery.</h2>
+
+    <div class="take">
+      <div class="t g">
+        <h4>Strengths</h4>
+        <p>Le Supreme and Hiroki-San are disciplined operators anchoring the platform. Anthology is beating revenue plan in Q1; Kamper's carries strong GP (80%+) when volume is there. Full-year forecast lands platform at $906K NOP and $582K net cash flow.</p>
+      </div>
+      <div class="t">
+        <h4>Watchout</h4>
+        <p>March came in 18% below budget on revenue and ~65% below budget on NOP. Kamper's and Anthology each run Prime Cost above 100% of revenue — unsustainable at current volumes.</p>
+      </div>
+      <div class="t i">
+        <h4>Opportunity</h4>
+        <p>The $1.49M Q2–Q4 NOP required to hit the full-year forecast depends on volume ramp at Le Supreme, Kamper's, and Anthology's event calendar. Tight labor management at Hiroki-San is the template the others can follow.</p>
+      </div>
+      <div class="t w">
+        <h4>Next step</h4>
+        <p>Outlet-by-outlet action: (1) Le Supreme — protect rate as volume returns; (2) Hiroki-San — hold the line on labor; (3) Kamper's — rebase cost structure; (4) Anthology — lock event calendar to underwrite the H2 NOP build.</p>
+      </div>
+    </div>
+  </section>
+
+  <div class="backtocontents-wrap"><a class="backtocontents" href="#contents">Back to Contents</a></div>
+  <footer>
+    <span>Book Tower Internal Review · Sections 1–10 · ROOST Detroit · Le Supreme · Hiroki-San · Kamper's · Anthology</span>
+    <span>Source: Revinate · Tripadvisor · Google · USALI Summary · Segment &amp; LOS Drilldown · STAR Report · F&amp;B Guest Surveys · Book Tower F&amp;B P&amp;L Detail · Period: 2026</span>
+  </footer>
+
+</div>
+
+<a href="#top" class="backtotop-float" aria-label="Back to top" title="Back to top"></a>
+
+</body>
+</html>
