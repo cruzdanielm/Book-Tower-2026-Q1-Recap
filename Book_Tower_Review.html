@@ -286,13 +286,45 @@
   .sectionband h2{margin:6px 0 0;font-size:30px;font-weight:300;letter-spacing:-.005em;}
   .sectionband .right{color:rgba(255,255,255,.7);font-size:11px;letter-spacing:.08em;text-transform:uppercase;text-align:right;}
 
-  /* ===== Monthly trend mini-chart ===== */
-  .mchart{display:grid;grid-template-columns:repeat(12,1fr);gap:6px;align-items:end;height:180px;padding:10px 0 6px;}
-  .mcol{display:flex;flex-direction:column;align-items:center;gap:4px;height:100%;justify-content:flex-end;}
-  .mbar{width:100%;background:var(--slate);border-radius:2px 2px 0 0;}
-  .mcol .mlbl{font-size:10px;color:var(--muted);letter-spacing:.04em;text-transform:uppercase;font-weight:700;}
-  .mcol .mval{font-size:10px;color:var(--ink);font-weight:700;}
-  .mchart-legend{display:flex;gap:12px;margin-top:6px;font-size:11px;color:var(--muted);}
+  /* ===== Monthly Forecast vs Budget chart ===== */
+  .fvb-chart{background:#FCFCFD;border:1px solid var(--line);border-radius:4px;padding:22px 24px 16px;position:relative;}
+  .fvb-head{display:flex;justify-content:space-between;align-items:flex-start;gap:20px;margin-bottom:18px;flex-wrap:wrap;}
+  .fvb-head .left{flex:1;min-width:260px;}
+  .fvb-head .ckicker{font-size:10px;color:var(--muted);letter-spacing:.14em;text-transform:uppercase;font-weight:700;margin-bottom:4px;}
+  .fvb-head h2{margin:0;font-size:19px;color:var(--slate-deeper);font-weight:700;line-height:1.3;letter-spacing:-.005em;}
+  .fvb-head .sub{font-size:12px;color:var(--muted);margin-top:4px;}
+  .fvb-summary{display:grid;grid-template-columns:repeat(3,auto);gap:0;border:1px solid var(--line);border-radius:3px;background:var(--white);overflow:hidden;}
+  .fvb-summary .cell{padding:8px 14px;border-right:1px solid var(--line);text-align:center;min-width:110px;}
+  .fvb-summary .cell:last-child{border-right:none;}
+  .fvb-summary .clbl{font-size:9px;color:var(--muted);letter-spacing:.12em;text-transform:uppercase;font-weight:700;}
+  .fvb-summary .cval{font-size:16px;color:var(--slate-deeper);font-weight:700;margin-top:2px;}
+  .fvb-summary .cval.pos{color:var(--good);}
+  .fvb-summary .cval.neg{color:var(--bad);}
+
+  .fvb-plot{position:relative;padding:40px 40px 48px;height:320px;}
+  .fvb-grid{position:absolute;left:40px;right:40px;top:40px;bottom:48px;}
+  .fvb-gridline{position:absolute;left:0;right:0;border-top:1px dashed var(--line);height:0;}
+  .fvb-ylabel{position:absolute;left:-44px;font-size:10px;color:var(--muted);font-weight:700;letter-spacing:.04em;transform:translateY(-50%);}
+  .fvb-axis{position:absolute;left:0;right:0;bottom:0;border-top:1px solid #B8C4CA;}
+  .fvb-cols{position:absolute;left:0;right:0;top:0;bottom:0;display:grid;grid-template-columns:repeat(12,1fr);gap:4px;align-items:end;}
+  .fvb-col{display:flex;flex-direction:column;align-items:center;height:100%;justify-content:flex-end;position:relative;}
+  .fvb-bars{display:flex;align-items:flex-end;gap:2px;height:100%;width:100%;justify-content:center;}
+  .fvb-bar{width:44%;min-width:8px;border-radius:2px 2px 0 0;}
+  .fvb-bar.forecast{background:var(--slate);}
+  .fvb-bar.actual{background:var(--slate-deeper);}
+  .fvb-bar.budget{background:#D6DDE1;}
+  .fvb-vlabel{position:absolute;top:-22px;font-size:10px;font-weight:700;white-space:nowrap;padding:1px 5px;border-radius:2px;}
+  .fvb-vlabel.pos{color:var(--good);background:#E7F1EA;}
+  .fvb-vlabel.neg{color:var(--bad);background:#F9E4DE;}
+  .fvb-mlabel{position:absolute;bottom:-28px;font-size:11px;font-weight:700;color:var(--slate-deeper);letter-spacing:.02em;}
+  .fvb-mlabel .phase{display:block;font-size:8px;color:var(--muted);font-weight:700;letter-spacing:.08em;text-transform:uppercase;margin-top:2px;}
+  .fvb-legend{display:flex;gap:16px;margin-top:14px;justify-content:flex-end;font-size:11px;color:var(--muted);}
+  .fvb-legend span{display:flex;align-items:center;}
+  .fvb-legend span::before{content:"";display:inline-block;width:10px;height:10px;margin-right:6px;border-radius:2px;}
+  .fvb-legend .lgd-actual::before{background:var(--slate-deeper);}
+  .fvb-legend .lgd-forecast::before{background:var(--slate);}
+  .fvb-legend .lgd-budget::before{background:#D6DDE1;}
+  .fvb-footer{font-size:11px;color:var(--muted);margin-top:12px;font-style:italic;border-top:1px solid var(--line);padding-top:10px;}
 
   /* ===== Industry benchmark tiles ===== */
   .bench{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;}
@@ -734,25 +766,108 @@
       <p><strong>Revenue plan roughly intact; earnings upside comes from expense efficiency.</strong> Top-line is tracking within ~1% of plan, which is consistent with a rate-for-volume mix. The real lift is $88.6K of undistributed savings plus $15.7K of rooms savings flowing to EBITDA, with lighter replacement reserve funding adding another $63.2K to reported results.</p>
     </div>
 
-    <div class="card" style="margin-top:22px;">
-      <h3>Monthly forecast · Rooms Revenue ($K)</h3>
-      <h2>Seasonality: Q2–Q4 carry the year</h2>
-      <div class="mchart">
-        <div class="mcol"><div class="mbar" style="height:51.6%;"></div><div class="mval">466</div><div class="mlbl">Jan</div></div>
-        <div class="mcol"><div class="mbar" style="height:53.7%;"></div><div class="mval">485</div><div class="mlbl">Feb</div></div>
-        <div class="mcol"><div class="mbar" style="height:71.9%;background:var(--coral);"></div><div class="mval">650</div><div class="mlbl">Mar</div></div>
-        <div class="mcol"><div class="mbar" style="height:79.1%;"></div><div class="mval">715</div><div class="mlbl">Apr</div></div>
-        <div class="mcol"><div class="mbar" style="height:97.1%;"></div><div class="mval">877</div><div class="mlbl">May</div></div>
-        <div class="mcol"><div class="mbar" style="height:97.4%;"></div><div class="mval">880</div><div class="mlbl">Jun</div></div>
-        <div class="mcol"><div class="mbar" style="height:82.4%;"></div><div class="mval">744</div><div class="mlbl">Jul</div></div>
-        <div class="mcol"><div class="mbar" style="height:96.8%;"></div><div class="mval">875</div><div class="mlbl">Aug</div></div>
-        <div class="mcol"><div class="mbar" style="height:92.2%;"></div><div class="mval">833</div><div class="mlbl">Sep</div></div>
-        <div class="mcol"><div class="mbar" style="height:100%;"></div><div class="mval">904</div><div class="mlbl">Oct</div></div>
-        <div class="mcol"><div class="mbar" style="height:77.6%;"></div><div class="mval">701</div><div class="mlbl">Nov</div></div>
-        <div class="mcol"><div class="mbar" style="height:62.1%;"></div><div class="mval">561</div><div class="mlbl">Dec</div></div>
+    <div class="fvb-chart" style="margin-top:22px;">
+      <div class="fvb-head">
+        <div class="left">
+          <div class="ckicker">Monthly Rooms Revenue · Forecast vs Budget ($K)</div>
+          <h2>Forecast tracks just ahead of budget; March is the driver.</h2>
+          <div class="sub">Jan–Mar actualized · Apr–Dec forecast · axis shown in thousands ($K)</div>
+        </div>
+        <div class="fvb-summary">
+          <div class="cell"><div class="clbl">FY Forecast</div><div class="cval">$8,689K</div></div>
+          <div class="cell"><div class="clbl">FY Budget</div><div class="cval">$8,624K</div></div>
+          <div class="cell"><div class="clbl">Variance</div><div class="cval pos">+$65K · +0.8%</div></div>
+        </div>
       </div>
-      <div class="mchart-legend">
-        <span>Q1 actualized (Jan–Mar); Apr–Dec forecast. Peak months: May, Jun, Aug, Oct (&gt;$870K). Full-year total: $8.69M.</span>
+
+      <div class="fvb-plot">
+        <!-- gridlines & y-labels (axis 0–$1,000K) -->
+        <div class="fvb-grid">
+          <div class="fvb-gridline" style="top:0%;"></div>
+          <div class="fvb-gridline" style="top:25%;"></div>
+          <div class="fvb-gridline" style="top:50%;"></div>
+          <div class="fvb-gridline" style="top:75%;"></div>
+          <div class="fvb-axis"></div>
+          <div class="fvb-ylabel" style="top:0%;">$1,000K</div>
+          <div class="fvb-ylabel" style="top:25%;">$750K</div>
+          <div class="fvb-ylabel" style="top:50%;">$500K</div>
+          <div class="fvb-ylabel" style="top:75%;">$250K</div>
+          <div class="fvb-ylabel" style="top:100%;">$0</div>
+          <!-- columns -->
+          <div class="fvb-cols">
+            <!-- JAN actualized, at plan -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar actual" style="height:46.6%;"></div>
+              <div class="fvb-bar budget" style="height:46.6%;"></div>
+            </div><div class="fvb-mlabel">Jan<span class="phase">Actual</span></div></div>
+            <!-- FEB actualized, at plan -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar actual" style="height:48.5%;"></div>
+              <div class="fvb-bar budget" style="height:48.5%;"></div>
+            </div><div class="fvb-mlabel">Feb<span class="phase">Actual</span></div></div>
+            <!-- MAR actualized, +$85K above plan -->
+            <div class="fvb-col">
+              <div class="fvb-vlabel pos">+$85K · +15%</div>
+              <div class="fvb-bars">
+                <div class="fvb-bar actual" style="height:65.0%;"></div>
+                <div class="fvb-bar budget" style="height:56.5%;"></div>
+              </div><div class="fvb-mlabel">Mar<span class="phase">Actual</span></div></div>
+            <!-- APR forecast, at plan -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar forecast" style="height:71.5%;"></div>
+              <div class="fvb-bar budget" style="height:71.7%;"></div>
+            </div><div class="fvb-mlabel">Apr<span class="phase">Forecast</span></div></div>
+            <!-- MAY -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar forecast" style="height:87.7%;"></div>
+              <div class="fvb-bar budget" style="height:88.0%;"></div>
+            </div><div class="fvb-mlabel">May<span class="phase">Forecast</span></div></div>
+            <!-- JUN -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar forecast" style="height:88.0%;"></div>
+              <div class="fvb-bar budget" style="height:88.2%;"></div>
+            </div><div class="fvb-mlabel">Jun<span class="phase">Forecast</span></div></div>
+            <!-- JUL -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar forecast" style="height:74.4%;"></div>
+              <div class="fvb-bar budget" style="height:74.6%;"></div>
+            </div><div class="fvb-mlabel">Jul<span class="phase">Forecast</span></div></div>
+            <!-- AUG -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar forecast" style="height:87.5%;"></div>
+              <div class="fvb-bar budget" style="height:87.7%;"></div>
+            </div><div class="fvb-mlabel">Aug<span class="phase">Forecast</span></div></div>
+            <!-- SEP -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar forecast" style="height:83.3%;"></div>
+              <div class="fvb-bar budget" style="height:83.5%;"></div>
+            </div><div class="fvb-mlabel">Sep<span class="phase">Forecast</span></div></div>
+            <!-- OCT -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar forecast" style="height:90.4%;"></div>
+              <div class="fvb-bar budget" style="height:90.6%;"></div>
+            </div><div class="fvb-mlabel">Oct<span class="phase">Forecast</span></div></div>
+            <!-- NOV -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar forecast" style="height:70.1%;"></div>
+              <div class="fvb-bar budget" style="height:70.3%;"></div>
+            </div><div class="fvb-mlabel">Nov<span class="phase">Forecast</span></div></div>
+            <!-- DEC -->
+            <div class="fvb-col"><div class="fvb-bars">
+              <div class="fvb-bar forecast" style="height:56.1%;"></div>
+              <div class="fvb-bar budget" style="height:56.3%;"></div>
+            </div><div class="fvb-mlabel">Dec<span class="phase">Forecast</span></div></div>
+          </div>
+        </div>
+      </div>
+
+      <div class="fvb-legend">
+        <span class="lgd-actual">Actual (Jan–Mar)</span>
+        <span class="lgd-forecast">Forecast (Apr–Dec)</span>
+        <span class="lgd-budget">Budget</span>
+      </div>
+      <div class="fvb-footer">
+        Q2–Q4 drive the year, with seasonal peaks in May, Jun, Aug, and Oct (all &gt;$870K). Q1 upside (+$85K) came almost entirely from March outperformance; Apr–Dec forecast tracks to budget within 1%. Monthly budget for Apr–Dec derived pro-rata from annual budget using forecast seasonality.
       </div>
     </div>
 
